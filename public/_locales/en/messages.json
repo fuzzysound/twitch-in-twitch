@@ -1,0 +1,47 @@
+{
+    "description": {
+        "message": "Open Twitch players inside Twitch player."
+    },
+    "chat": {
+        "message": "Chat"
+    },
+    "favorites": {
+        "message": "Favorites"
+    },
+    "streamerId": {
+        "message": "Streamer/VOD ID"
+    },
+    "delay": {
+        "message": "Main Broadcast Delay"
+    },
+    "sec": {
+        "message": "sec"
+    },
+    "apply": {
+        "message": "apply"
+    },
+    "tooltip_stream": {
+        "message": "Open Broadcast/VOD"
+    },
+    "tooltip_chat": {
+        "message": "Open Chat"
+    },
+    "tooltip_star": {
+        "message": "Add to Favorites"
+    },
+    "tooltip_unstar": {
+        "message": "Remove from Favorites"
+    },
+    "warn_fav_max_exceeded": {
+        "message": "Adding to Favorites is available up to $max$ streamers.",
+        "placeholders": {
+            "max": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "warn_invalid_input": {
+        "message": "Not a valid input."
+    }
+}

@@ -1,0 +1,40 @@
+.title {
+    font-size: 15px;
+    text-align: left;
+}
+
+.favoritesTitle {
+    font-size: 15px;
+    text-align: left;
+}
+
+.streamButton, .chatButton, .delFromFavButton, .addToFavButton {
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-style: none;
+    border-radius: 100%;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.streamButton:hover, .chatButton:hover, .delFromFavButton:hover, .addToFavButton:hover {
+    background-color: rgb(224, 224, 235);
+}
+
+.streamButton {
+    background-image: url(../../assets/twitch.png);
+}
+
+.chatButton {
+    background-image: url(../../assets/chat.png);
+}
+
+.delFromFavButton {
+    background-image: url(../../assets/unstar.png);
+}
+
+.addToFavButton {
+    background-image: url(../../assets/star.png);
+}

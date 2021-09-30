@@ -1,0 +1,47 @@
+{
+    "description": {
+        "message": "트위치 창 안에 또 다른 트위치 창을 열 수 있습니다."
+    },
+    "chat": {
+        "message": "채팅"
+    },
+    "favorites": {
+        "message": "즐겨찾기"
+    },
+    "streamerId": {
+        "message": "스트리머/VOD ID"
+    },
+    "delay": {
+        "message": "본방 딜레이"
+    },
+    "sec": {
+        "message": "초"
+    },
+    "apply": {
+        "message": "적용"
+    },
+    "tooltip_stream": {
+        "message": "방송/VOD 열기"
+    },
+    "tooltip_chat": {
+        "message": "채팅 열기"
+    },
+    "tooltip_star": {
+        "message": "즐겨찾기에 추가"
+    },
+    "tooltip_unstar": {
+        "message": "즐겨찾기에서 제거"
+    },
+    "warn_fav_max_exceeded": {
+        "message": "즐겨찾기는 최대 $max$명까지 등록 가능합니다.",
+        "placeholders": {
+            "max": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "warn_invalid_input": {
+        "message": "올바른 값이 아닙니다."
+    }
+}
