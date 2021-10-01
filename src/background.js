@@ -8,24 +8,24 @@ updateMainBroadcastDelay } from './store/contentSlice'
 import { addToFavorites, removeFromFavorites } from './store/favoriteSlice'
 import { ForegroundSignals, BackgroundSignals } from './common/signals'
 
+// extension only active in Twitch
+chrome.runtime.onInstalled.addListener(function () {
+    chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
+        chrome.declarativeContent.onPageChanged.addRules([
+        {
+            conditions: [
+            new chrome.declarativeContent.PageStateMatcher({
+                pageUrl: { urlMatches: 'twitch.tv/.+' },
+            })
+            ],
+            actions: [new chrome.declarativeContent.ShowPageAction()]
+        }
+        ])
+    })
+});
+
 (async () => {
     const store = await storeCreatorFactory({ createStore })(rootReducer)
-
-    // extension only active in Youtube or Twitch
-    chrome.runtime.onInstalled.addListener(function () {
-        chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-            chrome.declarativeContent.onPageChanged.addRules([
-            {
-                conditions: [
-                new chrome.declarativeContent.PageStateMatcher({
-                    pageUrl: { urlMatches: 'twitch.tv/.+' },
-                })
-                ],
-                actions: [new chrome.declarativeContent.ShowPageAction()]
-            }
-            ])
-        })
-    })
 
     // remove tab related state when removed
     chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
