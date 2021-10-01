@@ -17,7 +17,7 @@ function InputContainer({ onClickStreamButton, onClickChatButton, onClickAddToFa
             'flex-grow': 0
         },
         textField: {
-            width: '20ch'
+            width: '30ch'
         }
     }))
     const classes = useStyles()
