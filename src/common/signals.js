@@ -16,7 +16,8 @@ const BackgroundSignals = {
     UPDATE_CHAT_FRAME_LAST_SIZE: "update_chat_frame_last_size",
     ADD_TO_FAVORITES: "add_to_favorites",
     REMOVE_FROM_FAVORITES: "remove_from_favorites",
-    UPDATE_DELAY: "update_delay"
+    UPDATE_DELAY: "update_delay",
+    TOGGLE_DARK_MODE: "toggle_dark_mode"
 }
 
 export {

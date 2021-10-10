@@ -31,6 +31,7 @@ function InputContainer({ onClickStreamButton, onClickChatButton, onClickAddToFa
                     <TextField fullWidth
                     className={classes.textField}
                     size='small' 
+                    color='warning'
                     label={chrome.i18n.getMessage("streamerId")} 
                     variant="outlined" 
                     onChange={handleChange}

@@ -2,12 +2,15 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, createMuiTheme } from '@material-ui/core/styles'
+import { ThemeProvider } from "@material-ui/styles";
 import { BackgroundSignals } from '../../common/signals'
 import TitleContainer from './components/TitleContainer'
+import DarkModeControllerContainer from './components/DarkModeControllerContainer'
 import FavoritesContainer from './components/FavoritesContainer'
 import InputContainer from './components/InputContainer'
 import DelayControllerContainer from './components/DelayControllerContainer'
+import { selectIsDarkMode } from '../../store/contentSlice'
 import { selectShowFavoritesContainer } from '../../store/favoriteSlice'
 
 function App() {
@@ -16,6 +19,14 @@ function App() {
         padding: '5px',
     },
     popupElementGrid: {
+    },
+    lightMode: {
+        background: 'rgb(239, 239, 241)',
+        color: 'rgb(14, 14, 16)'
+    },
+    darkMode: {
+        background: 'rgb(66, 66, 66)',
+        color: 'rgb(255, 255, 255)'
     }
   }))
 
@@ -37,38 +48,52 @@ function App() {
     chrome.runtime.sendMessage({ signal: BackgroundSignals.REMOVE_FROM_FAVORITES, streamerId: streamerId })
   }
 
+  const isDarkMode = useSelector(selectIsDarkMode)
+
   const showFavoritesContainer = useSelector(selectShowFavoritesContainer)
 
+  const theme = createMuiTheme({
+    palette: {
+      type: isDarkMode ? "dark" : "light"
+    }
+  });
+
   return (
-    <Grid className={classes.popupGrid} container direction='column' spacing={2}>
-        <Grid className={classes.popupElementGrid} container item xs>
-            <TitleContainer />
+    <ThemeProvider theme={theme}>
+        <Grid className={classes.popupGrid + " " + (isDarkMode ? classes.darkMode : classes.lightMode)} container direction='column' spacing={2}>
+            <Grid className={classes.popupElementGrid} container item xs>
+                <TitleContainer />
+            </Grid>
+            <Divider />
+            <Grid className={classes.popupElementGrid} container item xs>
+                <DarkModeControllerContainer />
+            </Grid>
+            <Divider />
+            {showFavoritesContainer &&
+            <Grid className={classes.popupElementGrid} container item xs>
+                <FavoritesContainer 
+                onClickStreamButton={onClickStreamButton}
+                onClickChatButton={onClickChatButton}
+                onClickRemoveFromFavButton={onClickRemoveFromFavButton}
+                />
+            </Grid>
+            }
+            {showFavoritesContainer &&
+            <Divider />
+            }
+            <Grid className={classes.popupElementGrid} container item xs>
+                <InputContainer 
+                onClickStreamButton={onClickStreamButton}
+                onClickChatButton={onClickChatButton}
+                onClickAddToFavButton={onClickAddToFavButton}
+                />
+            </Grid>
+            <Divider />
+            <Grid className={classes.popupElementGrid} container item xs>
+                <DelayControllerContainer />
+            </Grid>
         </Grid>
-        <Divider />
-        {showFavoritesContainer &&
-        <Grid className={classes.popupElementGrid} container item xs>
-            <FavoritesContainer 
-            onClickStreamButton={onClickStreamButton}
-            onClickChatButton={onClickChatButton}
-            onClickRemoveFromFavButton={onClickRemoveFromFavButton}
-            />
-        </Grid>
-        }
-        {showFavoritesContainer &&
-        <Divider />
-        }
-        <Grid className={classes.popupElementGrid} container item xs>
-            <InputContainer 
-            onClickStreamButton={onClickStreamButton}
-            onClickChatButton={onClickChatButton}
-            onClickAddToFavButton={onClickAddToFavButton}
-            />
-        </Grid>
-        <Divider />
-        <Grid className={classes.popupElementGrid} container item xs>
-            <DelayControllerContainer />
-        </Grid>
-    </Grid>
+    </ThemeProvider>
   )
 }
 

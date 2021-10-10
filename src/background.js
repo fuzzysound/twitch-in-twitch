@@ -4,7 +4,7 @@ import rootReducer from './store/rootReducer'
 import { addStream, addChat, removeStream, removeChat, selectChat,
 removeChatFrame, removeTabRelatedState, changeCurrentTab, updateStreamLastPosition,
 updateStreamLastSize, updateChatFrameLastPosition, updateChatFrameLastSize,
-updateMainBroadcastDelay } from './store/contentSlice'
+updateMainBroadcastDelay, toggleDarkMode } from './store/contentSlice'
 import { addToFavorites, removeFromFavorites } from './store/favoriteSlice'
 import { ForegroundSignals, BackgroundSignals } from './common/signals'
 
@@ -125,6 +125,8 @@ chrome.runtime.onInstalled.addListener(function () {
             store.dispatch(updateChatFrameLastSize(request.size))
         } else if (request.signal === BackgroundSignals.UPDATE_DELAY) {
             store.dispatch(updateMainBroadcastDelay(request.tabId, request.delaySec))
+        } else if (request.signal === BackgroundSignals.TOGGLE_DARK_MODE) {
+            store.dispatch(toggleDarkMode())
         }
     })
 })()

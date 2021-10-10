@@ -21,7 +21,8 @@ const initialState = {
     chatFrameLastSize: {},
     recentlyUsedStreamerIds: [],
     mainBroadcastDelayByTabId: {},
-    currentTabId: -1
+    currentTabId: -1,
+    isDarkMode: false
 }
 
 const contentSlice = createSlice({
@@ -240,6 +241,9 @@ const contentSlice = createSlice({
             prepare(tabId, delaySec) {
                 return { payload: { tabId, delaySec }}
             }
+        },
+        toggleDarkMode(state, action) {
+            state.isDarkMode = !state.isDarkMode
         }
     }
 })
@@ -331,6 +335,10 @@ const selectCurrentMainBroadcastDelay = state => {
     }
 }
 
+const selectIsDarkMode = state => {
+    return state.content.isDarkMode
+}
+
 export const {
     addStream,
     addChat,
@@ -344,7 +352,8 @@ export const {
     updateStreamLastSize,
     updateChatFrameLastPosition,
     updateChatFrameLastSize,
-    updateMainBroadcastDelay
+    updateMainBroadcastDelay,
+    toggleDarkMode
 } = contentSlice.actions
 
 export {
@@ -354,7 +363,8 @@ export {
     selectShowChatFrame,
     selectCurrentTabId,
     selectCurrentHost,
-    selectCurrentMainBroadcastDelay
+    selectCurrentMainBroadcastDelay,
+    selectIsDarkMode
 }
 
 export default contentSlice.reducer

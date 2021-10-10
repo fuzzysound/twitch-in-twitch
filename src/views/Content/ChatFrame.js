@@ -8,7 +8,7 @@ import { Tabs, TabList, Tab, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 import './content.css'
 import styles from './Content.module.css'
-import { selectCurrentChatIdx, selectShowChatFrame } from '../../store/contentSlice'
+import { selectCurrentChatIdx, selectShowChatFrame, selectIsDarkMode } from '../../store/contentSlice'
 import { onDragStartHandler, onDragStopHandler, onResizeStartHandler,
 onResizeStopHandler } from '../../common/utils'
 import { BackgroundSignals } from '../../common/signals'
@@ -16,6 +16,7 @@ import { CHAT_ID_PREFIX } from '../../common/constants'
 import Header from './Header'
 import ChatEmbed from './ChatEmbed'
 import { ReactComponent as X } from '../../assets/x.svg'
+import { ReactComponent as XDark} from '../../assets/x_dark.svg'
 
 function ChatFrame({ host, streamerIds, tabId, initPos, initSize }) {
     const [isHeaderVisible, setIsHeaderVisible] = useState(false)
@@ -35,7 +36,6 @@ function ChatFrame({ host, streamerIds, tabId, initPos, initSize }) {
         tabsGrid: {
             width: '100%',
             'flex-grow': 1,
-            'background-color': 'rgb(247, 247, 248)',
             visibility: isChatFrameVisible ? 'visible' : 'hidden'
         },
         innerTabsGrid: {
@@ -50,13 +50,20 @@ function ChatFrame({ host, streamerIds, tabId, initPos, initSize }) {
             'flex-wrap': 'nowrap'
         },
         tabTitleGrid: {
-            'color': 'rgb(14, 14, 16)',
             'text-align': 'left'
         },
         tabPanelGrid: {
         },
         tabXButtonGrid: {
             'flex-grow': 0
+        },
+        lightMode: {
+            background: 'rgb(247, 247, 248)',
+            color: 'rgb(14, 14, 16)'
+        },
+        darkMode: {
+            background: 'rgb(66, 66, 66)',
+            color: 'rgb(255, 255, 255)'
         }
     }))
     const classes = useStyles();
@@ -105,8 +112,13 @@ function ChatFrame({ host, streamerIds, tabId, initPos, initSize }) {
 
     const showChatFrame = useSelector(selectShowChatFrame)
 
+    const isDarkMode = useSelector(selectIsDarkMode)
+
     const tabs = streamerIds.map((streamerId, idx) => (
-        <Tab key={streamerId}>
+        <Tab 
+        className="tab"
+        selectedClassName={isDarkMode ? "selected-tab-dark-mode" : "selected-tab-light-mode"}
+        key={streamerId}>
             <Grid className={classes.tabGrid} container spacing={1} item xs>
                 <Grid className={classes.tabTitleGrid} item xs>
                     {streamerId}
@@ -114,7 +126,10 @@ function ChatFrame({ host, streamerIds, tabId, initPos, initSize }) {
                 {currentChatIdx === idx &&
                 <Grid className={classes.tabXButtonGrid} item xs>
                     <button className={styles.Button} onClick={removeChat(streamerId)}>
-                        <X />
+                        {isDarkMode
+                        ? <XDark />
+                        : <X />
+                        }
                     </button>
                 </Grid>
                 }
@@ -127,6 +142,7 @@ function ChatFrame({ host, streamerIds, tabId, initPos, initSize }) {
             <ChatEmbed
             channel={streamerId}
             parent={host}
+            isDarkMode={isDarkMode}
             width='100%'
             height='100%'
             />
@@ -170,11 +186,16 @@ function ChatFrame({ host, streamerIds, tabId, initPos, initSize }) {
                         />
                     </Animate>
 
-                    <Grid className={classes.tabsGrid} container item xs>
-                        <Tabs className="chat-tab" forceRenderTabPanel={true} selectedIndex={currentChatIdx} onSelect={(idx, lastIdx, e) => selectChat(idx)}>
+                    <Grid className={classes.tabsGrid + " " + (isDarkMode ? classes.darkMode : classes.lightMode)} container item xs>
+                        <Tabs 
+                        className="chat-tab"
+                        forceRenderTabPanel={true} 
+                        selectedIndex={currentChatIdx} 
+                        onSelect={(idx, lastIdx, e) => selectChat(idx)}>
                             <Grid className={classes.innerTabsGrid} container direction='column'>
                                 <Grid className={classes.tabListGrid} item xs>
-                                    <TabList>
+                                    <TabList
+                                    className={isDarkMode ? "tab-list-dark-mode" : "tab-list-light-mode"}>
                                         {tabs}
                                     </TabList>
                                 </Grid>
