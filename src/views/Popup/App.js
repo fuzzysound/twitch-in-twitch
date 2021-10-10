@@ -10,6 +10,7 @@ import DarkModeControllerContainer from './components/DarkModeControllerContaine
 import FavoritesContainer from './components/FavoritesContainer'
 import InputContainer from './components/InputContainer'
 import DelayControllerContainer from './components/DelayControllerContainer'
+import CurrentDelayContainer from './components/CurrentDelayContainer'
 import { selectIsDarkMode } from '../../store/contentSlice'
 import { selectShowFavoritesContainer } from '../../store/favoriteSlice'
 
@@ -91,6 +92,9 @@ function App() {
             <Divider />
             <Grid className={classes.popupElementGrid} container item xs>
                 <DelayControllerContainer />
+            </Grid>
+            <Grid className={classes.popupElementGrid} container item xs>
+                <CurrentDelayContainer />
             </Grid>
         </Grid>
     </ThemeProvider>

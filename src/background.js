@@ -60,6 +60,8 @@ chrome.runtime.onInstalled.addListener(function () {
                 } else {
                     store.dispatch(removeTabRelatedState(tabId))
                 }
+            } else {
+                store.dispatch(removeTabRelatedState(tabId))
             }
         }
     })
