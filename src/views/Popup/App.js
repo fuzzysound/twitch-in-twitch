@@ -9,6 +9,7 @@ import TitleContainer from './components/TitleContainer'
 import DarkModeControllerContainer from './components/DarkModeControllerContainer'
 import FavoritesContainer from './components/FavoritesContainer'
 import InputContainer from './components/InputContainer'
+import ContentFinderContainer from './components/ContentFinderContainer'
 import DelayControllerContainer from './components/DelayControllerContainer'
 import CurrentDelayContainer from './components/CurrentDelayContainer'
 import { selectIsDarkMode } from '../../store/contentSlice'
@@ -88,6 +89,10 @@ function App() {
                 onClickChatButton={onClickChatButton}
                 onClickAddToFavButton={onClickAddToFavButton}
                 />
+            </Grid>
+            <Divider />
+            <Grid className={classes.popupElementGrid} container item xs>
+                <ContentFinderContainer />
             </Grid>
             <Divider />
             <Grid className={classes.popupElementGrid} container item xs>

@@ -7,6 +7,10 @@ updateStreamLastSize, updateChatFrameLastPosition, updateChatFrameLastSize,
 updateMainBroadcastDelay, toggleDarkMode } from './store/contentSlice'
 import { addToFavorites, removeFromFavorites } from './store/favoriteSlice'
 import { ForegroundSignals, BackgroundSignals } from './common/signals'
+import { STREAM_ID_PREFIX, CHAT_ID_PREFIX } from './common/constants'
+
+const OVERLAY_COLOR = { r: 155, g: 11, b: 239, a: 0.7 }
+const wait = (timeToDelay) => new Promise((resolve) => setTimeout(resolve, timeToDelay))
 
 // extension only active in Twitch
 chrome.runtime.onInstalled.addListener(function () {
@@ -23,6 +27,80 @@ chrome.runtime.onInstalled.addListener(function () {
         ])
     })
 });
+
+// promifisy chrome.debugger.attach
+function attach(target, requiredVersion) {
+    return new Promise(resolve => {
+        chrome.debugger.attach(target, requiredVersion, () => resolve())
+    })
+}
+
+// promifisy chrome.debugger.detach
+function detach(target) {
+    return new Promise(resolve => {
+        chrome.debugger.detach(target, () => resolve())
+    })
+}
+
+// promifisy chrome.debugger.sendCommand
+function sendCommand(target, method, commandParams) {
+    return new Promise(resolve => {
+        chrome.debugger.sendCommand(target, method, commandParams, result => resolve(result))
+    })
+}
+
+// show overlays of added contents using Chrome devtools protocol
+async function showContentOverlay(tabId, addedStreams, addedChats) {
+    if (!tabId) {
+        alert("Please refresh the page")
+        return
+    }
+    if (addedStreams.length === 0 && addedChats.length === 0) {
+        alert("There is no popups")
+        return
+    }
+    const debugee = { tabId: tabId }
+    await attach(debugee, "1.3")
+    try {
+        await sendCommand(debugee, "DOM.enable")
+        await sendCommand(debugee, "DOM.getDocument")
+        await sendCommand(debugee, "Overlay.enable")
+
+        const elementIds = []
+        for (let streamerId of addedStreams) {
+            elementIds.push(STREAM_ID_PREFIX + streamerId)
+        }
+        for (let streamerId of addedChats) {
+            elementIds.push(CHAT_ID_PREFIX + streamerId)
+        }
+
+        const nodeIds = []
+        for (let elementId of elementIds) {
+            const expression = "document.getElementById('" + elementId + "')"
+            const evalResult = await sendCommand(debugee, "Runtime.evaluate", { expression: expression })
+            if (evalResult === null) {
+                alert("Popup might be still loading.")
+                return
+            }
+            const remoteObject = evalResult.result
+            const node = await sendCommand(debugee, "DOM.requestNode", { objectId: remoteObject.objectId })
+            nodeIds.push(node.nodeId)
+        }
+
+        for (let nodeId of nodeIds) {
+            const params = {
+                highlightConfig: { contentColor: OVERLAY_COLOR },
+                nodeId: nodeId
+            }
+            await sendCommand(debugee, "DOM.highlightNode", params)
+            await wait(500)
+        }
+        await sendCommand(debugee, "DOM.hideHighlight")
+    }
+    finally {
+        await detach(debugee)
+    }
+}
 
 (async () => {
     const store = await storeCreatorFactory({ createStore })(rootReducer)
@@ -129,6 +207,11 @@ chrome.runtime.onInstalled.addListener(function () {
             store.dispatch(updateMainBroadcastDelay(request.tabId, request.delaySec))
         } else if (request.signal === BackgroundSignals.TOGGLE_DARK_MODE) {
             store.dispatch(toggleDarkMode())
+        } else if (request.signal === BackgroundSignals.SHOW_CONTENT_OVERLAY) {
+            chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+                const tabId = tabs.length === 0 ? null : tabs[0].id
+                showContentOverlay(tabId, request.addedStreams, request.addedChats)
+            })
         }
     })
 })()

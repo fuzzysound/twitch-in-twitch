@@ -17,7 +17,8 @@ const BackgroundSignals = {
     ADD_TO_FAVORITES: "add_to_favorites",
     REMOVE_FROM_FAVORITES: "remove_from_favorites",
     UPDATE_DELAY: "update_delay",
-    TOGGLE_DARK_MODE: "toggle_dark_mode"
+    TOGGLE_DARK_MODE: "toggle_dark_mode",
+    SHOW_CONTENT_OVERLAY: "show_content_overlay"
 }
 
 export {
