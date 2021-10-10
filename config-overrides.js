@@ -17,6 +17,7 @@ function override (config, env) {
   // Note: you may remove any property below except "popup" to exclude respective entry point from compilation
   config.entry = {
     popup: paths.appIndexJs,
+    options: paths.appSrc + '/options.js',
     background: paths.appSrc + '/background.js',
     content: paths.appSrc + '/content.js'
   }
@@ -56,6 +57,18 @@ function override (config, env) {
   config.plugins = replacePlugin(config.plugins,
     (name) => /HtmlWebpackPlugin/i.test(name), indexHtmlPlugin
   )
+
+  // Extra HtmlWebpackPlugin instance for options page
+  const optionsHtmlPlugin = new HtmlWebpackPlugin({
+    inject: true,
+    template: paths.appPublic + '/options.html',
+    filename: 'options.html',
+    chunks: ['options'],
+    minify: minifyOpts,
+  });
+  // Add the above HtmlWebpackPlugin instance into config.plugins
+  // Note: you may remove/comment the next line if you don't need an options page
+  config.plugins.push(optionsHtmlPlugin);
 
   // Custom ManifestPlugin instance to cast asset-manifest.json back to old plain format
   const manifestPlugin = new ManifestPlugin({
