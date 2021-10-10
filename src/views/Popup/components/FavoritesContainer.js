@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import styles from '../Popup.module.css'
-import { StreamButton, ChatButton, RemoveFromFavButton } from './Buttons'
+import { StreamButton, ChatButton, RemoveFromFavButton } from '../../Buttons'
 import { selectFavorites } from '../../../store/favoriteSlice'
 
 function FavoritesContainer({ onClickStreamButton, onClickChatButton, onClickRemoveFromFavButton }) {
