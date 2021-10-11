@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
@@ -34,21 +34,21 @@ function App() {
 
   const classes = useStyles()
 
-  const onClickStreamButton = streamerId => () => {
+  const onClickStreamButton = useCallback(streamerId => () => {
     chrome.runtime.sendMessage({ signal: BackgroundSignals.ADD_STREAM, streamerId: streamerId })
-  }
+  }, [])
 
-  const onClickChatButton = streamerId => () => {
+  const onClickChatButton = useCallback(streamerId => () => {
     chrome.runtime.sendMessage({ signal: BackgroundSignals.ADD_CHAT, streamerId: streamerId })
-  }
+  }, [])
 
-  const onClickAddToFavButton = streamerId => () => {
+  const onClickAddToFavButton = useCallback(streamerId => () => {
     chrome.runtime.sendMessage({ signal: BackgroundSignals.ADD_TO_FAVORITES, streamerId: streamerId })
-  }
+  }, [])
 
-  const onClickRemoveFromFavButton = streamerId => () => {
+  const onClickRemoveFromFavButton = useCallback(streamerId => () => {
     chrome.runtime.sendMessage({ signal: BackgroundSignals.REMOVE_FROM_FAVORITES, streamerId: streamerId })
-  }
+  }, [])
 
   const isDarkMode = useSelector(selectIsDarkMode)
 

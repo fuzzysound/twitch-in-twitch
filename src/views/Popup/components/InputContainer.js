@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
@@ -22,7 +22,7 @@ function InputContainer({ onClickStreamButton, onClickChatButton, onClickAddToFa
     }))
     const classes = useStyles()
 
-    const handleChange = event => setStreamerId(event.target.value)
+    const handleChange = useCallback(event => setStreamerId(event.target.value), [])
 
     return (
         <Grid className={classes.inputContainerGrid} container spacing={0} item xs>
