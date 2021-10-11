@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
-import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
 import { BackgroundSignals } from '../../../common/signals'

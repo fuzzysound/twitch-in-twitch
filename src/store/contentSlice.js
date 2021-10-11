@@ -2,10 +2,7 @@ import {
     createSlice
 } from '@reduxjs/toolkit'
 import {
-    initStreamPosition,
-    initStreamSize,
-    initChatFramePosition,
-    initChatFrameSize
+    getRandomInt
 } from '../common/utils'
 
 const RU_ARRAY_MAX_SIZE = 20
@@ -15,6 +12,10 @@ const initialState = {
     addedChatsByTabId: {},
     currentChatIdxByTabId: {},
     activeUrlsByTabId: {},
+    streamInitPosition: {x: 200, y: 200},
+    streamInitSize: {width: 480, height: 297},
+    chatFrameInitPosition: {x: 400, y: 200},
+    chatFrameInitSize: {width: 340, height: 720},
     streamLastPositions: {},
     streamLastSizes: {},
     chatFrameLastPosition: {},
@@ -67,11 +68,11 @@ const contentSlice = createSlice({
                 }
                 // initialize stream last position if saved position not exists
                 if (!(streamerId in state.streamLastPositions)) {
-                    state.streamLastPositions[streamerId] = initStreamPosition()
+                    state.streamLastPositions[streamerId] = initPosition(state.streamInitPosition)
                 }
                 // initialize stream last size if saved size not exists
                 if (!(streamerId in state.streamLastSizes)) {
-                    state.streamLastSizes[streamerId] = initStreamSize()
+                    state.streamLastSizes[streamerId] = state.streamInitSize
                 }
             },
             prepare(tabId, streamerId, url) {
@@ -106,11 +107,11 @@ const contentSlice = createSlice({
                 }
                 // initialize chat frame position if saved position not exists
                 if (Object.keys(state.chatFrameLastPosition).length === 0) {
-                    state.chatFrameLastPosition = initChatFramePosition()
+                    state.chatFrameLastPosition = initPosition(state.chatFrameInitPosition)
                 }
                 // initialize chat frame size if saved size not exists
                 if (Object.keys(state.chatFrameLastSize).length === 0) {
-                    state.chatFrameLastSize = initChatFrameSize()
+                    state.chatFrameLastSize = state.chatFrameInitSize
                 }
                 // set current chat idx
                 if (tabId in state.addedChatsByTabId) {
@@ -246,9 +247,52 @@ const contentSlice = createSlice({
         },
         toggleDarkMode(state, action) {
             state.isDarkMode = !state.isDarkMode
+        },
+        updateStreamInitPosition(state, action) {
+            const newPos = action.payload
+            if (newPos.x) {
+                state.streamInitPosition.x = newPos.x
+            }
+            if (newPos.y) {
+                state.streamInitPosition.y = newPos.y
+            }
+        },
+        updateStreamInitSize(state, action) {
+            const newSize = action.payload
+            if (newSize.width) {
+                state.streamInitSize.width = newSize.width
+            }
+            if (newSize.height) {
+                state.streamInitSize.height = newSize.height
+            }
+        },
+        updateChatFrameInitPosition(state, action) {
+            const newPos = action.payload
+            if (newPos.x) {
+                state.chatFrameInitPosition.x = newPos.x
+            }
+            if (newPos.y) {
+                state.chatFrameInitPosition.y = newPos.y
+            }
+        },
+        updateChatFrameInitSize(state, action) {
+            const newSize = action.payload
+            if (newSize.width) {
+                state.chatFrameInitSize.width = newSize.width
+            }
+            if (newSize.height) {
+                state.chatFrameInitSize.height = newSize.height
+            }
         }
     }
 })
+
+function initPosition(pos) {
+    return {
+        x: pos.x + getRandomInt(-10, 10),
+        y: pos.y + getRandomInt(-10, 10)
+    }
+}
 
 const selectCurrentStreamsInfo = state => {
     if (state.content.currentTabId in state.content.addedStreamsByTabId) {
@@ -257,10 +301,10 @@ const selectCurrentStreamsInfo = state => {
         for (const streamerId of streamerIds) {
             const initPos = streamerId in state.content.streamLastPositions ?
                 state.content.streamLastPositions[streamerId] :
-                initStreamPosition()
+                initPosition(state.content.streamInitPosition)
             const initSize = streamerId in state.content.streamLastSizes ?
                 state.content.streamLastSizes[streamerId] :
-                initStreamSize()
+                state.content.streamInitSize
             currentStreamsInfo[streamerId] = {
                 initPos: initPos,
                 initSize: initSize
@@ -286,8 +330,8 @@ const selectCurrentChatFrameInfo = state => {
     } else {
         return {
             streamerIds: [],
-            initPos: initChatFramePosition(),
-            initSize: initChatFrameSize()
+            initPos: initPosition(state.content.chatFrameInitPosition),
+            initSize: state.content.chatFrameInitSize
         }
     }
 }
@@ -337,9 +381,15 @@ const selectCurrentMainBroadcastDelay = state => {
     }
 }
 
-const selectIsDarkMode = state => {
-    return state.content.isDarkMode
-}
+const selectIsDarkMode = state => state.content.isDarkMode
+
+const selectStreamInitPosition = state => state.content.streamInitPosition
+
+const selectStreamInitSize = state => state.content.streamInitSize
+
+const selectChatFrameInitPosition = state => state.content.chatFrameInitPosition
+
+const selectChatFrameInitSize = state => state.content.chatFrameInitSize
 
 export const {
     addStream,
@@ -355,7 +405,11 @@ export const {
     updateChatFrameLastPosition,
     updateChatFrameLastSize,
     updateMainBroadcastDelay,
-    toggleDarkMode
+    toggleDarkMode,
+    updateStreamInitPosition,
+    updateStreamInitSize,
+    updateChatFrameInitPosition,
+    updateChatFrameInitSize
 } = contentSlice.actions
 
 export {
@@ -366,7 +420,11 @@ export {
     selectCurrentTabId,
     selectCurrentHost,
     selectCurrentMainBroadcastDelay,
-    selectIsDarkMode
+    selectIsDarkMode,
+    selectStreamInitPosition,
+    selectStreamInitSize,
+    selectChatFrameInitPosition,
+    selectChatFrameInitSize
 }
 
 export default contentSlice.reducer

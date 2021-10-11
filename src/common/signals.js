@@ -18,7 +18,11 @@ const BackgroundSignals = {
     REMOVE_FROM_FAVORITES: "remove_from_favorites",
     UPDATE_DELAY: "update_delay",
     TOGGLE_DARK_MODE: "toggle_dark_mode",
-    SHOW_CONTENT_OVERLAY: "show_content_overlay"
+    SHOW_CONTENT_OVERLAY: "show_content_overlay",
+    UPDATE_STREAM_INIT_POS: "update_stream_init_pos",
+    UPDATE_STREAM_INIT_SIZE: "update_stream_init_size",
+    UPDATE_CHAT_FRAME_INIT_POS: "update_chat_frame_init_pos",
+    UPDATE_CHAT_FRAME_INIT_SIZE: "update_chat_frame_init_size"
 }
 
 export {

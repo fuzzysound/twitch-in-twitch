@@ -4,7 +4,8 @@ import rootReducer from './store/rootReducer'
 import { addStream, addChat, removeStream, removeChat, selectChat,
 removeChatFrame, removeTabRelatedState, changeCurrentTab, updateStreamLastPosition,
 updateStreamLastSize, updateChatFrameLastPosition, updateChatFrameLastSize,
-updateMainBroadcastDelay, toggleDarkMode } from './store/contentSlice'
+updateMainBroadcastDelay, toggleDarkMode, updateStreamInitPosition,
+updateStreamInitSize, updateChatFrameInitPosition, updateChatFrameInitSize } from './store/contentSlice'
 import { addToFavorites, removeFromFavorites } from './store/favoriteSlice'
 import { ForegroundSignals, BackgroundSignals } from './common/signals'
 import { STREAM_ID_PREFIX, CHAT_ID_PREFIX } from './common/constants'
@@ -212,6 +213,14 @@ async function showContentOverlay(tabId, addedStreams, addedChats) {
                 const tabId = tabs.length === 0 ? null : tabs[0].id
                 showContentOverlay(tabId, request.addedStreams, request.addedChats)
             })
+        } else if (request.signal === BackgroundSignals.UPDATE_STREAM_INIT_POS) {
+            store.dispatch(updateStreamInitPosition(request.newPos))
+        } else if (request.signal === BackgroundSignals.UPDATE_STREAM_INIT_SIZE) {
+            store.dispatch(updateStreamInitSize(request.newSize))
+        } else if (request.signal === BackgroundSignals.UPDATE_CHAT_FRAME_INIT_POS) {
+            store.dispatch(updateChatFrameInitPosition(request.newPos))
+        } else if (request.signal === BackgroundSignals.UPDATE_CHAT_FRAME_INIT_SIZE) {
+            store.dispatch(updateChatFrameInitSize(request.newSize))
         }
     })
 })()
