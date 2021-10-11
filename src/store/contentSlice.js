@@ -237,9 +237,7 @@ const contentSlice = createSlice({
         updateMainBroadcastDelay: {
             reducer(state, action) {
                 const { tabId, delaySec } = action.payload
-                if (tabId in state.mainBroadcastDelayByTabId) {
-                    state.mainBroadcastDelayByTabId[tabId] = delaySec
-                }
+                state.mainBroadcastDelayByTabId[tabId] = delaySec
             },
             prepare(tabId, delaySec) {
                 return { payload: { tabId, delaySec }}

@@ -25,21 +25,21 @@ function App() {
         <div key={key}>
             <Grid className={classes.optionElementGrid} container direction='column' spacing={2}>
                 <div>
-                    즐겨찾기 관리
+                    {chrome.i18n.getMessage("option_fav_title")}
                 </div>
                 <FavoritesControllerContainer />
             </Grid>
             <Divider />
             <Grid className={classes.optionElementGrid} container direction='column' spacing={2}>
                 <div>
-                    초기 위치 조정
+                    {chrome.i18n.getMessage("option_init_pos_and_size_title")}
                 </div>
                 <InitPosAndSizeControllerContainer />
             </Grid>
             <Divider />
             <Grid className={classes.optionElementGrid} container direction='column' spacing={2}>
                 <div>
-                    데이터 삭제
+                    {chrome.i18n.getMessage("option_state_reset_title")}
                 </div>
                 <StateResetControllerContainer onResetState={resetKey}/>
             </Grid>

@@ -43,5 +43,62 @@
     },
     "warn_invalid_input": {
         "message": "Not a valid input."
+    },
+    "option_fav_title": {
+        "message": "Manage Favorites"
+    },
+    "option_init_pos_and_size_title": {
+        "message": "Adjust Initial Position and Size"
+    },
+    "option_state_reset_title": {
+        "message": "Reset Data"
+    },
+    "option_stream_init_pos": {
+        "message": "Stream Initial Position"
+    },
+    "option_stream_init_size": {
+        "message": "Stream Initial Size"
+    },
+    "option_chat_init_pos": {
+        "message": "Chat Initial Position"
+    },
+    "option_chat_init_size": {
+        "message": "Chat Initial Size"
+    },
+    "width": {
+        "message": "width: "
+    },
+    "height": {
+        "message": "height: "
+    },
+    "option_state_reset_content_only": {
+        "message": "Reset Data (except favorites)"
+    },
+    "option_state_reset_all": {
+        "message": "Reset All Data"
+    },
+    "find_content": {
+        "message": "I can't see streams or chat!"
+    },
+    "current_delay": {
+        "message": "Current Delay: $delaySec$sec",
+        "placeholders": {
+            "delaySec": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "dark_mode": {
+        "message": "Dark Mode"
+    },
+    "please_refresh": {
+        "message": "Please refresh the page."
+    },
+    "no_content": {
+        "message": "There is no added streams or chat."
+    },
+    "still_loading": {
+        "message": "It might be still loading. \nIf not showing, please refresh the page."
     }
 }

@@ -91,7 +91,7 @@ function InitPosAndSizeControllerContainer(props) {
     return (
         <Grid container direction='column' spacing={1} item xs>
             <Grid className={classes.titleLineGrid} item xs>
-                Stream Initial Position
+                {chrome.i18n.getMessage("option_stream_init_pos")}
             </Grid>
             <Grid className={classes.inputLineGrid} container spacing={0} item xs>
                 <Grid item xs={2}>
@@ -117,11 +117,11 @@ function InitPosAndSizeControllerContainer(props) {
                 </Grid>
             </Grid>
             <Grid className={classes.titleLineGrid} item xs>
-                Stream Initial Size
+                {chrome.i18n.getMessage("option_stream_init_size")}
             </Grid>
             <Grid className={classes.inputLineGrid} container spacing={0} item xs>
                 <Grid item xs={2}>
-                    width: 
+                    {chrome.i18n.getMessage("width")}
                 </Grid>
                 <Grid item xs={3}>
                     <IntegerTextField
@@ -132,7 +132,7 @@ function InitPosAndSizeControllerContainer(props) {
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={2}>
-                    height:
+                    {chrome.i18n.getMessage("height")}
                 </Grid>
                 <Grid item xs={3}>
                     <IntegerTextField
@@ -143,7 +143,7 @@ function InitPosAndSizeControllerContainer(props) {
                 </Grid>
             </Grid>
             <Grid className={classes.titleLineGrid} item xs>
-                Chat Initial Position
+                    {chrome.i18n.getMessage("option_chat_init_pos")}
             </Grid>
             <Grid className={classes.inputLineGrid} container spacing={0} item xs>
                 <Grid item xs={2}>
@@ -169,11 +169,11 @@ function InitPosAndSizeControllerContainer(props) {
                 </Grid>
             </Grid>
             <Grid className={classes.titleLineGrid} item xs>
-                Chat Initial Size
+                    {chrome.i18n.getMessage("option_chat_init_size")}
             </Grid>
             <Grid className={classes.inputLineGrid} container spacing={0} item xs>
                 <Grid item xs={2}>
-                    width: 
+                    {chrome.i18n.getMessage("width")}
                 </Grid>
                 <Grid item xs={3}>
                     <IntegerTextField
@@ -184,7 +184,7 @@ function InitPosAndSizeControllerContainer(props) {
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={2}>
-                    height:
+                    {chrome.i18n.getMessage("height")}
                 </Grid>
                 <Grid item xs={3}>
                     <IntegerTextField

@@ -43,5 +43,62 @@
     },
     "warn_invalid_input": {
         "message": "올바른 값이 아닙니다."
+    },
+    "option_fav_title": {
+        "message": "즐겨찾기 관리"
+    },
+    "option_init_pos_and_size_title": {
+        "message": "초기 위치 및 크기 조정"
+    },
+    "option_state_reset_title": {
+        "message": "데이터 리셋"
+    },
+    "option_stream_init_pos": {
+        "message": "방송 초기 위치"
+    },
+    "option_stream_init_size": {
+        "message": "방송 초기 크기"
+    },
+    "option_chat_init_pos": {
+        "message": "채팅 초기 위치"
+    },
+    "option_chat_init_size": {
+        "message": "채팅 초기 크기"
+    },
+    "width": {
+        "message": "너비: "
+    },
+    "height": {
+        "message": "높이: "
+    },
+    "option_state_reset_content_only": {
+        "message": "데이터 리셋 (즐겨찾기 제외)"
+    },
+    "option_state_reset_all": {
+        "message": "모든 데이터 리셋"
+    },
+    "find_content": {
+        "message": "방송이나 채팅이 안 보여요!"
+    },
+    "current_delay": {
+        "message": "현재 딜레이: $delaySec$초",
+        "placeholders": {
+            "delaySec": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "dark_mode": {
+        "message": "다크 모드"
+    },
+    "please_refresh": {
+        "message": "페이지를 새로고침해 주세요."
+    },
+    "no_content": {
+        "message": "추가된 방송이나 채팅이 없습니다."
+    },
+    "still_loading": {
+        "message": "아직 로딩 중일 수 있습니다. \n계속 보이지 않을 경우 페이지를 새로고침해 주세요."
     }
 }

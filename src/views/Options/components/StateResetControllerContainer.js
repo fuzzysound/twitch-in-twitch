@@ -29,12 +29,12 @@ function StateResetControllerContainer(props) {
         <Grid container direction='column' spacing={1} item xs>
             <Grid className={classes.buttonLineGrid} item xs>
                 <Button variant='contained' onClick={resetContentState}>
-                    데이터 삭제 (즐겨찾기 제외)
+                    {chrome.i18n.getMessage("option_state_reset_content_only")}
                 </Button>
             </Grid>
             <Grid className={classes.buttonLineGrid} item xs>
                 <Button variant='contained' onClick={resetAllState}>
-                    모든 데이터 삭제
+                    {chrome.i18n.getMessage("option_state_reset_all")}
                 </Button>
             </Grid>
         </Grid>

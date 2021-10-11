@@ -63,7 +63,7 @@ function FavoritesControllerContainer() {
                         <TextField fullWidth
                         className={classes.textField}
                         size='small'
-                        label='스트리머/VOD ID'
+                        label={chrome.i18n.getMessage("streamerId")}
                         variant='outlined'
                         onChange={handleChange}
                         />

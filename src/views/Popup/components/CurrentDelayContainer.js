@@ -18,7 +18,7 @@ function CurrentDelayContainer(props) {
 
     return (
         <Grid className={classes.currentDelayContainerGrid} item xs>
-            현재 딜레이: {currentMainBroadcastDelay.toString()}초
+                {chrome.i18n.getMessage("current_delay", currentMainBroadcastDelay.toString())}
         </Grid>
     )
 }

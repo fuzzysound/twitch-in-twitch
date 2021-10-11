@@ -54,11 +54,11 @@ function sendCommand(target, method, commandParams) {
 // show overlays of added contents using Chrome devtools protocol
 async function showContentOverlay(tabId, addedStreams, addedChats) {
     if (!tabId) {
-        alert("Please refresh the page")
+        alert(chrome.i18n.getMessage("please_refresh"))
         return
     }
     if (addedStreams.length === 0 && addedChats.length === 0) {
-        alert("There is no popups")
+        alert(chrome.i18n.getMessage("no_content"))
         return
     }
     const debugee = { tabId: tabId }
@@ -81,7 +81,7 @@ async function showContentOverlay(tabId, addedStreams, addedChats) {
             const expression = "document.getElementById('" + elementId + "')"
             const evalResult = await sendCommand(debugee, "Runtime.evaluate", { expression: expression })
             if (evalResult === null) {
-                alert("Popup might be still loading.")
+                alert(chrome.i18n.getMessage("still_loading"))
                 return
             }
             const remoteObject = evalResult.result

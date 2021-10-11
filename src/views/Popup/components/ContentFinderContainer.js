@@ -31,7 +31,7 @@ function ContentFinderContainer(props) {
     return (
         <Grid className={classes.contentFinderContainerGrid} container spacing={1} item xs>
             <Button variant='contained' onClick={findContent}>
-                I can't find streams or chat!
+                {chrome.i18n.getMessage("find_content")}
             </Button>
         </Grid>
     )

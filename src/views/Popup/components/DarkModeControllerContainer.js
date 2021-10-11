@@ -31,7 +31,7 @@ function DarkModeControllerContainer(props) {
         <Grid className={classes.darkModeControllerContainerGrid} container spacing={1} item xs>
             <Grid item xs={4}>
                 <div className={classes.descriptionField}>
-                    다크 모드
+                    {chrome.i18n.getMessage("dark_mode")}
                 </div>
             </Grid>
             <Grid item xs={2}></Grid>
