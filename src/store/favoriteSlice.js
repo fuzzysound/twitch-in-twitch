@@ -24,6 +24,9 @@ const favoriteSlice = createSlice({
                 const idx = state.favorites.indexOf(action.payload)
                 state.favorites.splice(idx, 1)
             }
+        },
+        resetFavoriteState(state, action) {
+            state.favorites = initialState.favorites
         }
     }
 })
@@ -34,7 +37,8 @@ const selectShowFavoritesContainer = state => state.favorite.favorites.length > 
 
 export const {
     addToFavorites,
-    removeFromFavorites
+    removeFromFavorites,
+    resetFavoriteState
 } = favoriteSlice.actions
 
 export {

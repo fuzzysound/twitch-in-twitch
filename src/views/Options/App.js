@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
 import { makeStyles } from '@material-ui/core/styles'
 import FavoritesControllerContainer from './components/FavoritesControllerContainer'
 import InitPosAndSizeControllerContainer from './components/InitPosAndSizeControllerContainer'
+import StateResetControllerContainer from './components/StateResetControllerContainer'
 
 function App() {
+    const [key, setKey] = useState(Math.random())
+
     const useStyles = makeStyles((theme) => ({
         optionElementGrid: {
             'padding': '15px',
@@ -14,8 +17,12 @@ function App() {
     }))
     const classes = useStyles()
 
+    const resetKey = useCallback(() => {
+        setKey(Math.random())
+    }, [])
+
     return (
-        <div>
+        <div key={key}>
             <Grid className={classes.optionElementGrid} container direction='column' spacing={2}>
                 <div>
                     즐겨찾기 관리
@@ -34,6 +41,7 @@ function App() {
                 <div>
                     데이터 삭제
                 </div>
+                <StateResetControllerContainer onResetState={resetKey}/>
             </Grid>
         </div>
     )

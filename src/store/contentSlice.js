@@ -283,6 +283,24 @@ const contentSlice = createSlice({
             if (newSize.height) {
                 state.chatFrameInitSize.height = newSize.height
             }
+        },
+        resetContentState(state, action) {
+            state.addedStreamsByTabId = initialState.addedStreamsByTabId
+            state.addedChatsByTabId = initialState.addedChatsByTabId
+            state.currentChatIdxByTabId = initialState.currentChatIdxByTabId
+            state.activeUrlsByTabId = initialState.activeUrlsByTabId
+            state.streamInitPosition = initialState.streamInitPosition
+            state.streamInitSize = initialState.streamInitSize
+            state.chatFrameInitPosition = initialState.chatFrameInitPosition
+            state.chatFrameInitSize = initialState.chatFrameInitSize
+            state.streamLastPositions = initialState.streamLastPositions
+            state.streamLastSizes = initialState.streamLastSizes
+            state.chatFrameLastPosition = initialState.chatFrameLastPosition
+            state.chatFrameLastSize = initialState.chatFrameLastSize
+            state.recentlyUsedStreamerIds = initialState.recentlyUsedStreamerIds
+            state.mainBroadcastDelayByTabId = initialState.mainBroadcastDelayByTabId
+            state.currentTabId = initialState.currentTabId
+            state.isDarkMode = initialState.isDarkMode
         }
     }
 })
@@ -409,7 +427,8 @@ export const {
     updateStreamInitPosition,
     updateStreamInitSize,
     updateChatFrameInitPosition,
-    updateChatFrameInitSize
+    updateChatFrameInitSize,
+    resetContentState
 } = contentSlice.actions
 
 export {

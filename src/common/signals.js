@@ -22,7 +22,9 @@ const BackgroundSignals = {
     UPDATE_STREAM_INIT_POS: "update_stream_init_pos",
     UPDATE_STREAM_INIT_SIZE: "update_stream_init_size",
     UPDATE_CHAT_FRAME_INIT_POS: "update_chat_frame_init_pos",
-    UPDATE_CHAT_FRAME_INIT_SIZE: "update_chat_frame_init_size"
+    UPDATE_CHAT_FRAME_INIT_SIZE: "update_chat_frame_init_size",
+    RESET_CONTENT_STATE: "reset_content_state",
+    RESET_FAVORITE_STATE: "reset_favorite_state"
 }
 
 export {
