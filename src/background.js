@@ -155,7 +155,7 @@ async function showContentOverlay(tabId, addedStreams, addedChats) {
         })
     })
 
-    // on runtime message that needs re-render
+    // on runtime message
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         if (request.signal === BackgroundSignals.ADD_STREAM) {
             chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
@@ -189,18 +189,6 @@ async function showContentOverlay(tabId, addedStreams, addedChats) {
             store.dispatch(updateStreamLastPosition(request.streamerId, request.pos))
         } else if (request.signal === BackgroundSignals.UPDATE_STREAM_LAST_SIZE) {
             store.dispatch(updateStreamLastSize(request.streamerId, request.size))
-        }
-        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-            chrome.tabs.sendMessage(tabs[0].id, {signal: ForegroundSignals.RENDER})
-        })
-    })
-
-    // on runtime message that needs no re-render
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        if (request.signal === BackgroundSignals.UPDATE_STREAM_LAST_POS) {
-            store.dispatch(updateStreamLastPosition(request.streamerId, request.pos))
-        } else if (request.signal === BackgroundSignals.UPDATE_STREAM_LAST_SIZE) {
-            store.dispatch(updateStreamLastSize(request.streamerId, request.size))
         } else if (request.signal === BackgroundSignals.UPDATE_CHAT_FRAME_LAST_POS) {
             store.dispatch(updateChatFrameLastPosition(request.pos))
         } else if (request.signal === BackgroundSignals.UPDATE_CHAT_FRAME_LAST_SIZE) {
@@ -227,5 +215,8 @@ async function showContentOverlay(tabId, addedStreams, addedChats) {
         } else if (request.signal === BackgroundSignals.RESET_FAVORITE_STATE) {
             store.dispatch(resetFavoriteState())
         }
+        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+            chrome.tabs.sendMessage(tabs[0].id, {signal: ForegroundSignals.RENDER})
+        })
     })
 })()
