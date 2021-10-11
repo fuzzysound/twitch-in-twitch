@@ -1,9 +1,7 @@
 import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
-import { InputAdornment } from '@material-ui/core'
 import { BackgroundSignals } from '../../../common/signals'
 import IntegerTextField from '../../TextFields/IntegerTextField'
 import { selectStreamInitPosition, selectStreamInitSize,
@@ -20,7 +18,7 @@ function InitPosAndSizeControllerContainer(props) {
             'flex-wrap': 'nowrap',
             'line-height': '180%',
             'font-size': '15px',
-            margin: '10px 0 10px 0'
+            margin: '5px 0 10px 0'
         }
     }))
     const classes = useStyles()
