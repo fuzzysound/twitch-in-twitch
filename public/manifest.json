@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Twitch-in-Twitch",
-  "version": "1.1",
+  "version": "1.2",
   "description": "__MSG_description__",
   "permissions": [
     "https://www.twitch.tv/",
