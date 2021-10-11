@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 import { InputAdornment } from '@material-ui/core'
 import { selectCurrentMainBroadcastDelay } from '../../../store/contentSlice'
 import { ForegroundSignals, BackgroundSignals } from '../../../common/signals'
+import FloatTextField from '../../TextFields/FloatTextField'
 
 function DelayControllerContainer(props) {
     const [delaySec, setDelaySec] = useState(0);
@@ -39,10 +40,6 @@ function DelayControllerContainer(props) {
 
     const applyDelay = useCallback(() => {
         const parsedDelaySec = parseFloat(delaySec)
-        if (isNaN(parsedDelaySec) || parsedDelaySec < 0) {
-            alert(chrome.i18n.getMessage("warn_invalid_input"))
-            return
-        }
         const interval = parsedDelaySec - currentMainBroadcastDelay
         chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
             chrome.tabs.sendMessage(tabs[0].id, {signal: ForegroundSignals.DELAY, interval: interval})
@@ -59,15 +56,9 @@ function DelayControllerContainer(props) {
             </Grid>
             <Grid item xs={4}>
                 <form onSubmit={applyDelay}>
-                    <TextField fullWidth
+                    <FloatTextField
                     className={classes.textField}
-                    size='small'
-                    variant='outlined'
-                    InputProps={{
-                        endAdornment: <InputAdornment position='end'>
-                            {chrome.i18n.getMessage("sec")}
-                        </InputAdornment>
-                    }}
+                    suffix={chrome.i18n.getMessage("sec")}
                     onChange={handleChange}
                     />
                 </form>
