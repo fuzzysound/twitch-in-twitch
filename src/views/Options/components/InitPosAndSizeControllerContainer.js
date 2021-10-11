@@ -34,52 +34,60 @@ function InitPosAndSizeControllerContainer(props) {
     const chatFrameInitSize = useSelector(selectChatFrameInitSize)
 
     const updateStreamInitPositionX = useCallback(event => {
+        const x = parseInt(event.target.value)
         chrome.runtime.sendMessage({ 
             signal: BackgroundSignals.UPDATE_STREAM_INIT_POS, 
-            newPos: {x: event.target.value} })
+            newPos: {x: x} })
     }, [])
 
     const updateStreamInitPositionY = useCallback(event => {
+        const y = parseInt(event.target.value)
         chrome.runtime.sendMessage({ 
             signal: BackgroundSignals.UPDATE_STREAM_INIT_POS, 
-            newPos: {y: event.target.value} 
+            newPos: {y: y} 
         })
     }, [])
 
     const updateStreamInitSizeWidth = useCallback(event => {
+        const width = parseInt(event.target.value)
         chrome.runtime.sendMessage({  
             signal: BackgroundSignals.UPDATE_STREAM_INIT_SIZE, 
-            newSize: {width: event.target.value} })
+            newSize: {width: width} })
     }, [])
     
     const updateStreamInitSizeHeight = useCallback(event => {
+        const height = parseInt(event.target.value)
         chrome.runtime.sendMessage({ 
             signal: BackgroundSignals.UPDATE_STREAM_INIT_SIZE, 
-            newSize: {height: event.target.value} })
+            newSize: {height: height} })
     }, [])
     
     const updateChatFrameInitPositionX = useCallback(event => {
+        const x = parseInt(event.target.value)
         chrome.runtime.sendMessage({  
             signal: BackgroundSignals.UPDATE_CHAT_FRAME_INIT_POS, 
-            newPos: {x: event.target.value} })
+            newPos: {x: x} })
     }, [])
 
     const updateChatFrameInitPositionY = useCallback(event => {
+        const y = parseInt(event.target.value)
         chrome.runtime.sendMessage({ 
             signal: BackgroundSignals.UPDATE_CHAT_FRAME_INIT_POS, 
-            newPos: {y: event.target.value} })
+            newPos: {y: y} })
     }, [])
 
     const updateChatFrameInitSizeWidth = useCallback(event => {
+        const width = parseInt(event.target.value)
         chrome.runtime.sendMessage({ 
             signal: BackgroundSignals.UPDATE_CHAT_FRAME_INIT_SIZE, 
-            newSize: {width: event.target.value} })
+            newSize: {width: width} })
     }, [])
     
     const updateChatFrameInitSizeHeight = useCallback(event => {
+        const height = parseInt(event.target.value)
         chrome.runtime.sendMessage({ 
             signal: BackgroundSignals.UPDATE_CHAT_FRAME_INIT_SIZE, 
-            newSize: {height: event.target.value} })
+            newSize: {height: height} })
     }, [])
 
     return (
