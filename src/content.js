@@ -26,7 +26,7 @@ const signalListener = store => (request, sender, sendResponse) => {
         if (videos.length === 0) {
             return
         }
-        const videoRoot = videos[0].parentElement.parentElement
+        const videoRoot = videos[0].parentElement
         let streamEmbedRoot = document.getElementById(STREAM_EMBED_ROOT)
         if (streamEmbedRoot === null) {
             streamEmbedRoot = document.createElement("div")
