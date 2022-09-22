@@ -23,7 +23,8 @@ const initialState = {
     recentlyUsedStreamerIds: [],
     mainBroadcastDelayByTabId: {},
     currentTabId: -1,
-    isDarkMode: false
+    isDarkMode: false,
+    isStreamOnOuterLayer: false,
 }
 
 const contentSlice = createSlice({
@@ -299,6 +300,15 @@ const contentSlice = createSlice({
             state.mainBroadcastDelayByTabId = initialState.mainBroadcastDelayByTabId
             state.currentTabId = initialState.currentTabId
             state.isDarkMode = initialState.isDarkMode
+            state.isStreamOnOuterLayer = initialState.isStreamOnOuterLayer
+        },
+        changeStreamLayer(state, action) {
+            const layer = action.payload
+            if (layer === "inner") {
+                state.isStreamOnOuterLayer = false
+            } else {
+                state.isStreamOnOuterLayer = true
+            }
         }
     }
 })
@@ -403,6 +413,14 @@ const selectChatFrameInitPosition = state => state.content.chatFrameInitPosition
 
 const selectChatFrameInitSize = state => state.content.chatFrameInitSize
 
+const selectStreamLayer = state => {
+    if (state.content.isStreamOnOuterLayer) {
+        return "outer"
+    } else {
+        return "inner"
+    }
+}
+
 export const {
     addStream,
     addChat,
@@ -422,7 +440,8 @@ export const {
     updateStreamInitSize,
     updateChatFrameInitPosition,
     updateChatFrameInitSize,
-    resetContentState
+    resetContentState,
+    changeStreamLayer,
 } = contentSlice.actions
 
 export {
@@ -437,7 +456,8 @@ export {
     selectStreamInitPosition,
     selectStreamInitSize,
     selectChatFrameInitPosition,
-    selectChatFrameInitSize
+    selectChatFrameInitSize,
+    selectStreamLayer,
 }
 
 export default contentSlice.reducer
