@@ -8,6 +8,15 @@
     "favorites": {
         "message": "Favorites"
     },
+    "stream_layer": {
+        "message": "Stream Layer"
+    },
+    "stream_layer_inner": {
+        "message": "Inside main"
+    },
+    "stream_layer_outer": {
+        "message": "Outside main"
+    },
     "streamerId": {
         "message": "Streamer/VOD ID"
     },

@@ -8,7 +8,8 @@ import StreamList from './views/Content/StreamList'
 import ChatFrameWrapper from './views/Content/ChatFrameWrapper'
 import { ForegroundSignals } from './common/signals'
 
-const STREAM_EMBED_ROOT = "stream-embed-root";
+const STREAM_INNER_IMBED_ROOT = "stream-embed-root";
+const STREAM_OUTER_EMBED_ROOT = "stream-outer-embed-root";
 const CHAT_EMBED_ROOT = "chat-embed-root";
 
 function findContentRoot(body, videoRoot) {
@@ -27,12 +28,26 @@ const signalListener = store => (request, sender, sendResponse) => {
             return
         }
         const videoRoot = videos[0].parentElement
-        let streamEmbedRoot = document.getElementById(STREAM_EMBED_ROOT)
-        if (streamEmbedRoot === null) {
-            streamEmbedRoot = document.createElement("div")
-            streamEmbedRoot.setAttribute("id", STREAM_EMBED_ROOT)
-            videoRoot.appendChild(streamEmbedRoot)
+        let streamInnerEmbedRoot = document.getElementById(STREAM_INNER_IMBED_ROOT)
+        if (streamInnerEmbedRoot === null) {
+            streamInnerEmbedRoot = document.createElement("div")
+            streamInnerEmbedRoot.setAttribute("id", STREAM_INNER_IMBED_ROOT)
+            videoRoot.appendChild(streamInnerEmbedRoot)
         }
+        let streamOuterEmbedRoot = document.getElementById(STREAM_OUTER_EMBED_ROOT)
+        if (streamOuterEmbedRoot === null) {
+            streamOuterEmbedRoot = document.createElement("div")
+            streamOuterEmbedRoot.setAttribute("id", STREAM_OUTER_EMBED_ROOT)
+            streamOuterEmbedRoot.setAttribute("style", "z-index: 99999")
+            const contentRoot = findContentRoot(document.body, videoRoot)
+            if (contentRoot !== null) {
+                contentRoot.appendChild(streamOuterEmbedRoot)
+            }
+        }
+        const isStreamOnOuterLayer = store.state.content.isStreamOnOuterLayer
+        const streamEmbedRoot = (isStreamOnOuterLayer) ? streamOuterEmbedRoot : streamInnerEmbedRoot
+        const streamEmbedRootToRemove = (isStreamOnOuterLayer) ? streamInnerEmbedRoot : streamOuterEmbedRoot
+        streamEmbedRootToRemove.parentElement.removeChild(streamEmbedRootToRemove)
         ReactDOM.render(
             <Provider store={store}>
                 <StreamList />
@@ -44,7 +59,7 @@ const signalListener = store => (request, sender, sendResponse) => {
         if (chatEmbedRoot === null) {
             chatEmbedRoot = document.createElement("div")
             chatEmbedRoot.setAttribute("id", CHAT_EMBED_ROOT)
-            chatEmbedRoot.setAttribute("style", "z-index: 99999")
+            chatEmbedRoot.setAttribute("style", "z-index: 99998")
             const contentRoot = findContentRoot(document.body, videoRoot)
             if (contentRoot !== null) {
                 contentRoot.appendChild(chatEmbedRoot)

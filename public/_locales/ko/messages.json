@@ -8,6 +8,15 @@
     "favorites": {
         "message": "즐겨찾기"
     },
+    "stream_layer": {
+        "message": "방송 위치 설정"
+    },
+    "stream_layer_inner": {
+        "message": "본방 안쪽"
+    },
+    "stream_layer_outer": {
+        "message": "본방 바깥쪽"
+    },
     "streamerId": {
         "message": "스트리머/VOD ID"
     },

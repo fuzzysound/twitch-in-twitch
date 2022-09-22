@@ -6,7 +6,7 @@ removeChatFrame, removeTabRelatedState, changeCurrentTab, updateStreamLastPositi
 updateStreamLastSize, updateChatFrameLastPosition, updateChatFrameLastSize,
 updateMainBroadcastDelay, toggleDarkMode, updateStreamInitPosition,
 updateStreamInitSize, updateChatFrameInitPosition, updateChatFrameInitSize,
-resetContentState } from './store/contentSlice'
+resetContentState, changeStreamLayer } from './store/contentSlice'
 import { addToFavorites, removeFromFavorites, resetFavoriteState } from './store/favoriteSlice'
 import { ForegroundSignals, BackgroundSignals } from './common/signals'
 import { STREAM_ID_PREFIX, CHAT_ID_PREFIX } from './common/constants'
@@ -214,6 +214,10 @@ async function showContentOverlay(tabId, addedStreams, addedChats) {
             store.dispatch(resetContentState())
         } else if (request.signal === BackgroundSignals.RESET_FAVORITE_STATE) {
             store.dispatch(resetFavoriteState())
+        } else if (request.signal === BackgroundSignals.CHANGE_STREAM_LAYER_TO_INNER) {
+            store.dispatch(changeStreamLayer("inner"))
+        } else if (request.signal === BackgroundSignals.CHANGE_STREAM_LAYER_TO_OUTER) {
+            store.dispatch(changeStreamLayer("outer"))
         }
         chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
             chrome.tabs.sendMessage(tabs[0].id, {signal: ForegroundSignals.RENDER})
