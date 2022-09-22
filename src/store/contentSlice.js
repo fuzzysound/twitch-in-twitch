@@ -334,21 +334,17 @@ const selectCurrentStreamsInfo = state => {
 
 const selectCurrentChatFrameInfo = state => {
     const tabId = state.content.currentTabId
-    if (tabId in state.content.addedChatsByTabId) {
-        const streamerIds = state.content.addedChatsByTabId[tabId]
-        const initPos = state.content.chatFrameLastPosition
-        const initSize = state.content.chatFrameLastSize
-        return {
-            streamerIds: streamerIds,
-            initPos: initPos,
-            initSize: initSize
-        }
-    } else {
-        return {
-            streamerIds: [],
-            initPos: initPosition(state.content.chatFrameInitPosition),
-            initSize: state.content.chatFrameInitSize
-        }
+    const streamerIds = state.content.addedChatsByTabId[tabId] || []
+    const initPos = (Object.keys(state.content.chatFrameLastPosition).length === 0) 
+                      ? initPosition(state.content.chatFrameInitPosition) 
+                      : state.content.chatFrameLastPosition
+    const initSize = (Object.keys(state.content.chatFrameLastSize).length === 0)
+                      ? state.content.chatFrameInitSize
+                      : state.content.chatFrameLastSize
+    return {
+        streamerIds: streamerIds,
+        initPos: initPos,
+        initSize: initSize
     }
 }
 
