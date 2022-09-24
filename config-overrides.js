@@ -19,7 +19,8 @@ function override (config, env) {
     popup: paths.appIndexJs,
     options: paths.appSrc + '/options.js',
     background: paths.appSrc + '/background.js',
-    content: paths.appSrc + '/content.js'
+    content: paths.appSrc + '/content.js',
+    iframeContent: paths.appSrc + '/iframeContent.js'
   }
   // Change output filename template to get rid of hash there
   config.output.filename = 'static/js/[name].js'

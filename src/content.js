@@ -7,6 +7,7 @@ import storeCreatorFactory from 'reduxed-chrome-storage'
 import StreamList from './views/Content/StreamList'
 import ChatFrameWrapper from './views/Content/ChatFrameWrapper'
 import { ForegroundSignals } from './common/signals'
+import { STREAM_ID_PREFIX } from './common/constants'
 
 const STREAM_INNER_IMBED_ROOT = "stream-embed-root";
 const STREAM_OUTER_EMBED_ROOT = "stream-outer-embed-root";
@@ -82,7 +83,22 @@ const signalListener = store => (request, sender, sendResponse) => {
     return true
 }
 
+const keyDownEventListener = event => {
+    const streamIframes = document.querySelectorAll('[id^="' + STREAM_ID_PREFIX + '"]')
+    switch (event.keyCode) {
+        case 37:
+            streamIframes.forEach(iframe => iframe.contentWindow.postMessage(ForegroundSignals.MOVE_BACK, "*"))
+            break
+        case 39:
+            streamIframes.forEach(iframe => iframe.contentWindow.postMessage(ForegroundSignals.MOVE_FORWARD, "*"))
+            break
+        default:
+            break
+     }
+}
+
 (async () => {
     const store = await storeCreatorFactory({ createStore })(rootReducer)
     chrome.runtime.onMessage.addListener(signalListener(store))
+    document.onkeydown = keyDownEventListener
 })()
