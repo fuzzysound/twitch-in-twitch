@@ -14,11 +14,18 @@
   "background": {
     "scripts": ["static/js/background.js"]
   },
-  "content_scripts": [{
-    "js": [ "static/js/content.js" ],
-    "css": ["static/css/content.css"],
-    "matches": ["https://www.twitch.tv/*"]
-  }],
+  "content_scripts": [
+    {
+      "js": [ "static/js/content.js" ],
+      "css": ["static/css/content.css"],
+      "matches": ["https://www.twitch.tv/*"]
+    },
+    {
+      "js": [ "static/js/iframeContent.js" ],
+      "all_frames": true,
+      "matches": [ "https://player.twitch.tv/*" ]
+    }
+  ],
   "icons": {
     "16": "logo/logo16.png",
     "32": "logo/logo32.png",
