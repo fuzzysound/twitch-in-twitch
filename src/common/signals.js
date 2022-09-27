@@ -3,6 +3,7 @@ const ForegroundSignals = {
     DELAY: "delay",
     MOVE_FORWARD: "move_forward",
     MOVE_BACK: "move_back",
+    GOTO: "goto",
 }
 
 const BackgroundSignals = {

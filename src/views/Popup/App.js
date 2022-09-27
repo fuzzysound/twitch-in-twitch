@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
 import { makeStyles, createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from "@material-ui/styles";
-import { BackgroundSignals } from '../../common/signals'
+import { BackgroundSignals, ForegroundSignals } from '../../common/signals'
 import TitleContainer from './components/TitleContainer'
 import DarkModeControllerContainer from './components/DarkModeControllerContainer'
 import FavoritesContainer from './components/FavoritesContainer'
@@ -15,6 +15,8 @@ import CurrentDelayContainer from './components/CurrentDelayContainer'
 import StreamLayerControllerContainer from './components/StreamLayerControllerContainer'
 import { selectIsDarkMode } from '../../store/contentSlice'
 import { selectShowFavoritesContainer } from '../../store/favoriteSlice'
+import { getLatestVodId } from '../../common/twitch'
+import { getVodUrl } from '../../common/utils'
 
 function App() {
   const useStyles = makeStyles((theme) => ({
@@ -41,6 +43,23 @@ function App() {
 
   const onClickChatButton = useCallback(streamerId => () => {
     chrome.runtime.sendMessage({ signal: BackgroundSignals.ADD_CHAT, streamerId: streamerId })
+  }, [])
+
+  const onClickLatestVodButton = useCallback(streamerId => async () => {
+    const vodId = await getLatestVodId(streamerId)
+    if (vodId !== null) {
+      chrome.runtime.sendMessage({ signal: BackgroundSignals.ADD_STREAM, streamerId: vodId })
+    }
+  }, [])
+
+  const onClickLatestVodGotoButton = useCallback(streamerId => async () => {
+    const vodId = await getLatestVodId(streamerId)
+    if (vodId !== null) {
+      const vodUrl = getVodUrl(vodId)
+      chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+          chrome.tabs.sendMessage(tabs[0].id, { signal: ForegroundSignals.GOTO, url: vodUrl })
+      })
+    }
   }, [])
 
   const onClickAddToFavButton = useCallback(streamerId => () => {
@@ -81,6 +100,8 @@ function App() {
                 <FavoritesContainer 
                 onClickStreamButton={onClickStreamButton}
                 onClickChatButton={onClickChatButton}
+                onClickLatestVodButton={onClickLatestVodButton}
+                onClickLatestVodGotoButton={onClickLatestVodGotoButton}
                 onClickRemoveFromFavButton={onClickRemoveFromFavButton}
                 />
             </Grid>
@@ -92,6 +113,8 @@ function App() {
                 <InputContainer 
                 onClickStreamButton={onClickStreamButton}
                 onClickChatButton={onClickChatButton}
+                onClickLatestVodButton={onClickLatestVodButton}
+                onClickLatestVodGotoButton={onClickLatestVodGotoButton}
                 onClickAddToFavButton={onClickAddToFavButton}
                 />
             </Grid>

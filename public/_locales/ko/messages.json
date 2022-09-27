@@ -35,6 +35,12 @@
     "tooltip_chat": {
         "message": "채팅 열기"
     },
+    "tooltip_latest_vod": {
+        "message": "최신 VOD 열기"
+    },
+    "tooltip_latest_vod_goto": {
+        "message": "최신 VOD로 이동"
+    },
     "tooltip_star": {
         "message": "즐겨찾기에 추가"
     },
