@@ -8,7 +8,7 @@ import { onDragStartHandler, onDragStopHandler, onResizeStartHandler,
 onResizeStopHandler } from '../../common/utils'
 import Header from './Header'
 import StreamEmbed from './StreamEmbed'
-import { BackgroundSignals } from '../../common/signals'
+import { BackgroundSignals, ForegroundSignals } from '../../common/signals'
 import { STREAM_ID_PREFIX } from '../../common/constants'
 
 function Stream ({ key, streamerId, host, initPos, initSize }) {
@@ -52,7 +52,7 @@ function Stream ({ key, streamerId, host, initPos, initSize }) {
         const iframeId = STREAM_ID_PREFIX + streamerId
         const iframeToRefresh = document.getElementById(iframeId)
         if (iframeToRefresh !== null && iframeToRefresh.tagName === "IFRAME") {
-            iframeToRefresh.contentWindow.location.reload(true)
+            iframeToRefresh.contentWindow.postMessage(ForegroundSignals.REFRESH, "*")
         }
     }, [])
 

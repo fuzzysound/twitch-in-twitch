@@ -4,6 +4,7 @@ const ForegroundSignals = {
     MOVE_FORWARD: "move_forward",
     MOVE_BACK: "move_back",
     GOTO: "goto",
+    REFRESH: "refresh",
 }
 
 const BackgroundSignals = {
