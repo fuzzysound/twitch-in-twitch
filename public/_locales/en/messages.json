@@ -35,6 +35,12 @@
     "tooltip_chat": {
         "message": "Open Chat"
     },
+    "tooltip_latest_vod": {
+        "message": "Open Latest VOD"
+    },
+    "tooltip_latest_vod_goto": {
+        "message": "Go To Latest VOD"
+    },
     "tooltip_star": {
         "message": "Add to Favorites"
     },

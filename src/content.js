@@ -79,6 +79,8 @@ const signalListener = store => (request, sender, sendResponse) => {
         }
         const video = videos[0]
         video.currentTime -= request.interval
+    } else if (request.signal === ForegroundSignals.GOTO) {
+        window.location.href = request.url
     }
     return true
 }

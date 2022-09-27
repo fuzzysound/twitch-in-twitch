@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import styles from '../Popup.module.css'
-import { StreamButton, ChatButton, RemoveFromFavButton } from '../../Buttons'
+import { StreamButton, ChatButton, RemoveFromFavButton, LatestVodButton, LatestVodGotoButton } from '../../Buttons'
 import { selectFavorites } from '../../../store/favoriteSlice'
 
-function FavoritesContainer({ onClickStreamButton, onClickChatButton, onClickRemoveFromFavButton }) {
+function FavoritesContainer({ onClickStreamButton, onClickChatButton, onClickLatestVodButton, onClickLatestVodGotoButton, onClickRemoveFromFavButton }) {
     const useStyles = makeStyles((theme) => ({
         favoriteGrid: {
             height: '40px',
@@ -26,6 +26,8 @@ function FavoritesContainer({ onClickStreamButton, onClickChatButton, onClickRem
             </Grid>
             <StreamButton onClick={onClickStreamButton(streamerId)} />
             <ChatButton onClick={onClickChatButton(streamerId)} />
+            <LatestVodButton onClick={onClickLatestVodButton(streamerId)}/>
+            <LatestVodGotoButton onClick={onClickLatestVodGotoButton(streamerId)}/>
             <RemoveFromFavButton onClick={onClickRemoveFromFavButton(streamerId)} />
         </Grid>
     ))

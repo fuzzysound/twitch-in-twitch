@@ -2,9 +2,9 @@ import React, { useState, useCallback } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import { StreamButton, ChatButton, AddToFavButton } from '../../Buttons'
+import { StreamButton, ChatButton, AddToFavButton, LatestVodButton, LatestVodGotoButton } from '../../Buttons'
 
-function InputContainer({ onClickStreamButton, onClickChatButton, onClickAddToFavButton }) {
+function InputContainer({ onClickStreamButton, onClickChatButton, onClickLatestVodButton, onClickLatestVodGotoButton, onClickAddToFavButton }) {
     const [streamerId, setStreamerId] =  useState("")
 
     const useStyles = makeStyles((theme) => ({
@@ -40,6 +40,8 @@ function InputContainer({ onClickStreamButton, onClickChatButton, onClickAddToFa
             </Grid>
             <StreamButton onClick={onClickStreamButton(streamerId)} />
             <ChatButton onClick={onClickChatButton(streamerId)} />
+            <LatestVodButton onClick={onClickLatestVodButton(streamerId)}/>
+            <LatestVodGotoButton onClick={onClickLatestVodGotoButton(streamerId)}/>
             <AddToFavButton onClick={onClickAddToFavButton(streamerId)} />
         </Grid>
     )

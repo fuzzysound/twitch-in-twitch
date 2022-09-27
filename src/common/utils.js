@@ -63,3 +63,7 @@ export const onResizeStopHandler = (newPos, setPos, newSize, setSize, callback) 
     toggleIframePointerEvents(false);
     callback()
 }
+
+export const getVodUrl = vodId => {
+    return "https://www.twitch.tv/videos/" + vodId
+}

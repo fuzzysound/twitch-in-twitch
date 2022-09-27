@@ -1,4 +1,4 @@
-.streamButton, .chatButton, .delFromFavButton, .addToFavButton {
+.streamButton, .chatButton, .delFromFavButton, .addToFavButton, .latestVodButton, .latestVodGotoButton {
     margin-left: 5px;
     width: 30px;
     height: 30px;
@@ -9,7 +9,7 @@
     background-color: rgba(239, 239, 241, 1);
 }
 
-.streamButton:hover, .chatButton:hover, .delFromFavButton:hover, .addToFavButton:hover {
+.streamButton:hover, .chatButton:hover, .delFromFavButton:hover, .addToFavButton:hover, .latestVodButton:hover, .latestVodGotoButton:hover {
     background-color: rgb(224, 224, 235);
 }
 
@@ -27,4 +27,12 @@
 
 .addToFavButton {
     background-image: url(../../assets/star.png);
+}
+
+.latestVodButton {
+    background-image: url(../../assets/vod.png);
+}
+
+.latestVodGotoButton {
+    background-image: url(../../assets/vod_goto.png);
 }
