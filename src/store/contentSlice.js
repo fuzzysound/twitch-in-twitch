@@ -8,6 +8,7 @@ import {
 const RU_ARRAY_MAX_SIZE = 20
 
 const initialState = {
+    contentRenderer: 0,
     addedStreamsByTabId: {},
     addedChatsByTabId: {},
     currentChatIdxByTabId: {},
@@ -25,6 +26,9 @@ const initialState = {
     currentTabId: -1,
     isDarkMode: false,
     isStreamOnOuterLayer: false,
+    isVodMoveTimeTogether: false,
+    isVodSpoilerFree: false,
+
 }
 
 const contentSlice = createSlice({
@@ -247,6 +251,12 @@ const contentSlice = createSlice({
         toggleDarkMode(state, action) {
             state.isDarkMode = !state.isDarkMode
         },
+        toggleVodMoveTimeTogether(state, action) {
+            state.isVodMoveTimeTogether = !state.isVodMoveTimeTogether
+        },
+        toggleVodSpoilerFree(state, action) {
+            state.isVodSpoilerFree = !state.isVodSpoilerFree
+        },
         updateStreamInitPosition(state, action) {
             const newPos = action.payload
             if (newPos.x) {
@@ -284,6 +294,7 @@ const contentSlice = createSlice({
             }
         },
         resetContentState(state, action) {
+            state.contentRenderer = initialState.contentRenderer
             state.addedStreamsByTabId = initialState.addedStreamsByTabId
             state.addedChatsByTabId = initialState.addedChatsByTabId
             state.currentChatIdxByTabId = initialState.currentChatIdxByTabId
@@ -301,6 +312,8 @@ const contentSlice = createSlice({
             state.currentTabId = initialState.currentTabId
             state.isDarkMode = initialState.isDarkMode
             state.isStreamOnOuterLayer = initialState.isStreamOnOuterLayer
+            state.isVodMoveTimeTogether = initialState.isVodMoveTimeTogether
+            state.isVodSpoilerFree = initialState.isVodSpoilerFree
         },
         changeStreamLayer(state, action) {
             const layer = action.payload
@@ -309,6 +322,14 @@ const contentSlice = createSlice({
             } else {
                 state.isStreamOnOuterLayer = true
             }
+        },
+        render(state, action) {
+            // render function in content script is called by store subscriber
+            // thus only state change can make rendering occur.
+            // when we want to call render function manually,
+            // we can use contentRenderer field, assigning a random number to it
+            // to make state change happen.
+            state.contentRenderer = Math.random()
         }
     }
 })
@@ -405,6 +426,10 @@ const selectCurrentMainBroadcastDelay = state => {
 
 const selectIsDarkMode = state => state.content.isDarkMode
 
+const selectIsVodMoveTimeTogether = state => state.content.isVodMoveTimeTogether
+
+const selectIsVodSpoilerFree = state => state.content.isVodSpoilerFree
+
 const selectStreamInitPosition = state => state.content.streamInitPosition
 
 const selectStreamInitSize = state => state.content.streamInitSize
@@ -436,12 +461,15 @@ export const {
     updateChatFrameLastSize,
     updateMainBroadcastDelay,
     toggleDarkMode,
+    toggleVodMoveTimeTogether,
+    toggleVodSpoilerFree,
     updateStreamInitPosition,
     updateStreamInitSize,
     updateChatFrameInitPosition,
     updateChatFrameInitSize,
     resetContentState,
     changeStreamLayer,
+    render,
 } = contentSlice.actions
 
 export {
@@ -453,6 +481,8 @@ export {
     selectCurrentHost,
     selectCurrentMainBroadcastDelay,
     selectIsDarkMode,
+    selectIsVodMoveTimeTogether,
+    selectIsVodSpoilerFree,
     selectStreamInitPosition,
     selectStreamInitSize,
     selectChatFrameInitPosition,

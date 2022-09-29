@@ -107,6 +107,15 @@
     "dark_mode": {
         "message": "Dark Mode"
     },
+    "vod_feature": {
+        "message": "VOD Only Features"
+    },
+    "vod_move_time_together": {
+        "message": "Move Time Together"
+    },
+    "vod_spoiler_free": {
+        "message": "Spoiler Free"
+    },
     "please_refresh": {
         "message": "Please refresh the page."
     },

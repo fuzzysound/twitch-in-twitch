@@ -28,7 +28,7 @@ function DarkModeControllerContainer(props) {
     }, [])
     
     return (
-        <Grid className={classes.darkModeControllerContainerGrid} container spacing={1} item xs>
+        <Grid className={classes.darkModeControllerContainerGrid} container spacing={0} item xs>
             <Grid item xs={4}>
                 <div className={classes.descriptionField}>
                     {chrome.i18n.getMessage("dark_mode")}
