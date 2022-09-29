@@ -6,9 +6,9 @@ removeChatFrame, removeTabRelatedState, changeCurrentTab, updateStreamLastPositi
 updateStreamLastSize, updateChatFrameLastPosition, updateChatFrameLastSize,
 updateMainBroadcastDelay, toggleDarkMode, updateStreamInitPosition,
 updateStreamInitSize, updateChatFrameInitPosition, updateChatFrameInitSize,
-resetContentState, changeStreamLayer } from './store/contentSlice'
+resetContentState, changeStreamLayer, toggleVodMoveTimeTogether, toggleVodSpoilerFree, render } from './store/contentSlice'
 import { addToFavorites, removeFromFavorites, resetFavoriteState } from './store/favoriteSlice'
-import { ForegroundSignals, BackgroundSignals } from './common/signals'
+import { BackgroundSignals } from './common/signals'
 import { STREAM_ID_PREFIX, CHAT_ID_PREFIX } from './common/constants'
 
 const OVERLAY_COLOR = { r: 155, g: 11, b: 239, a: 0.7 }
@@ -134,7 +134,7 @@ async function showContentOverlay(tabId, addedStreams, addedChats) {
                 if (activeUrlsByTabId[tabId] === url) {
                     // refresh doesn't change the state, thus not caught by store subscription
                     // therefore we have to manually re-render the content
-                    chrome.tabs.sendMessage(tabId, {signal: ForegroundSignals.RENDER})
+                    store.dispatch(render())
                     // reset main broadcast delay
                     store.dispatch(updateMainBroadcastDelay(tabId, 0))
                 } else {
@@ -197,6 +197,10 @@ async function showContentOverlay(tabId, addedStreams, addedChats) {
             store.dispatch(updateMainBroadcastDelay(request.tabId, request.delaySec))
         } else if (request.signal === BackgroundSignals.TOGGLE_DARK_MODE) {
             store.dispatch(toggleDarkMode())
+        } else if (request.signal === BackgroundSignals.TOGGLE_VOD_MOVE_TIME_TOGETHER) {
+            store.dispatch(toggleVodMoveTimeTogether())
+        } else if (request.signal === BackgroundSignals.TOGGLE_VOD_SPOILER_FREE) {
+            store.dispatch(toggleVodSpoilerFree())
         } else if (request.signal === BackgroundSignals.SHOW_CONTENT_OVERLAY) {
             chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
                 const tabId = tabs.length === 0 ? null : tabs[0].id
@@ -219,8 +223,6 @@ async function showContentOverlay(tabId, addedStreams, addedChats) {
         } else if (request.signal === BackgroundSignals.CHANGE_STREAM_LAYER_TO_OUTER) {
             store.dispatch(changeStreamLayer("outer"))
         }
-        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-            chrome.tabs.sendMessage(tabs[0].id, {signal: ForegroundSignals.RENDER})
-        })
+        store.dispatch(render())
     })
 })()

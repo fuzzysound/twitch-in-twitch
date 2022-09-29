@@ -107,6 +107,15 @@
     "dark_mode": {
         "message": "다크 모드"
     },
+    "vod_feature": {
+        "message": "VOD 전용 기능"
+    },
+    "vod_move_time_together": {
+        "message": "일체형 시간 탐색"
+    },
+    "vod_spoiler_free": {
+        "message": "스포일러 방지"
+    },
     "please_refresh": {
         "message": "페이지를 새로고침해 주세요."
     },

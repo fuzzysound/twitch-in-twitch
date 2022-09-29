@@ -1,5 +1,4 @@
 const ForegroundSignals = {
-    RENDER: "render",
     DELAY: "delay",
     MOVE_FORWARD: "move_forward",
     MOVE_BACK: "move_back",
@@ -22,6 +21,8 @@ const BackgroundSignals = {
     REMOVE_FROM_FAVORITES: "remove_from_favorites",
     UPDATE_DELAY: "update_delay",
     TOGGLE_DARK_MODE: "toggle_dark_mode",
+    TOGGLE_VOD_MOVE_TIME_TOGETHER: "toggle_vod_move_time_together",
+    TOGGLE_VOD_SPOILER_FREE: "toggle_vod_spoiler_free",
     SHOW_CONTENT_OVERLAY: "show_content_overlay",
     UPDATE_STREAM_INIT_POS: "update_stream_init_pos",
     UPDATE_STREAM_INIT_SIZE: "update_stream_init_size",

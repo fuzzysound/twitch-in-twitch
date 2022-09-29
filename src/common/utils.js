@@ -67,3 +67,7 @@ export const onResizeStopHandler = (newPos, setPos, newSize, setSize, callback) 
 export const getVodUrl = vodId => {
     return "https://www.twitch.tv/videos/" + vodId
 }
+
+export const sleep = ms => {
+    return new Promise((r) => setTimeout(r, ms));
+}

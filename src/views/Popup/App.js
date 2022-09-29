@@ -7,6 +7,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import { BackgroundSignals, ForegroundSignals } from '../../common/signals'
 import TitleContainer from './components/TitleContainer'
 import DarkModeControllerContainer from './components/DarkModeControllerContainer'
+import VodFeatureControllerContainer from './components/VodFeatureControllerContainer'
 import FavoritesContainer from './components/FavoritesContainer'
 import InputContainer from './components/InputContainer'
 import ContentFinderContainer from './components/ContentFinderContainer'
@@ -89,6 +90,10 @@ function App() {
             <Divider />
             <Grid className={classes.popupElementGrid} container item xs>
                 <DarkModeControllerContainer />
+            </Grid>
+            <Divider />
+            <Grid className={classes.popupElementGrid} container item xs>
+                <VodFeatureControllerContainer />
             </Grid>
             <Divider />
             <Grid className={classes.popupElementGrid} container item xs>
