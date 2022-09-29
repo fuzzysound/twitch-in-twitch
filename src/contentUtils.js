@@ -18,10 +18,10 @@ export const createDivWithId = id => {
 
 export const registerObserver = async (selector, callback) => {
     let element;
-    for (let i=0; i < 10; i++) {
+    for (let i=0; i < 100; i++) {
         element = document.querySelector(selector)
         if (!element) {
-            await sleep(100)
+            await sleep(10)
         } else {
             const observer = new MutationObserver(callback)
             observer.observe(element, { childList: true, subtree: true })
