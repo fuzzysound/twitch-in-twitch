@@ -256,37 +256,37 @@ const contentSlice = createSlice({
         },
         updateStreamInitPosition(state, action) {
             const newPos = action.payload
-                if (newPos.x) {
+                if (newPos.hasOwnProperty('x')) {
                 state.streamInitPosition.x = newPos.x
                 }
-                if (newPos.y) {
+                if (newPos.hasOwnProperty('y')) {
                 state.streamInitPosition.y = newPos.y
                 }
             },
         updateStreamInitSize(state, action) {
             const newSize = action.payload
-                if (newSize.width) {
+                if (newSize.hasOwnProperty('width')) {
                 state.streamInitSize.width = newSize.width
                 }
-                if (newSize.height) {
+                if (newSize.hasOwnProperty('height')) {
                 state.streamInitSize.height = newSize.height
                 }
             },
         updateChatFrameInitPosition(state, action) {
             const newPos = action.payload
-                if (newPos.x) {
+                if (newPos.hasOwnProperty('x')) {
                 state.chatFrameInitPosition.x = newPos.x
                 }
-                if (newPos.y) {
+                if (newPos.hasOwnProperty('y')) {
                 state.chatFrameInitPosition.y = newPos.y
                 }
             },
         updateChatFrameInitSize(state, action) {
             const newSize = action.payload
-                if (newSize.width) {
+                if (newSize.hasOwnProperty('width')) {
                 state.chatFrameInitSize.width = newSize.width
                 }
-                if (newSize.height) {
+                if (newSize.hasOwnProperty('height')) {
                 state.chatFrameInitSize.height = newSize.height
             }
         },
