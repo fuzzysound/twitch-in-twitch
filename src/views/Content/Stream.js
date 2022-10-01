@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { Rnd } from 'react-rnd'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
@@ -17,8 +17,10 @@ function Stream ({ key, streamerId, host, initPos, initSize }) {
     const [isStreamVisible, setIsStreamVisible] = useState(true)
 
     const [pos, setPos] = useState(initPos)
+    useEffect(() => setPos(initPos), [initPos])
 
     const [size, setSize] = useState(initSize)
+    useEffect(() => setSize(initSize), [initSize])
 
     const useStyles = makeStyles((theme) => ({
         rootGrid: {
