@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback, useMemo, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Rnd } from 'react-rnd'
 import Grid from '@material-ui/core/Grid'
@@ -24,8 +24,10 @@ function ChatFrame({ host, streamerIds, tabId, initPos, initSize }) {
     const [isChatFrameVisible, setIsChatFrameVisible] = useState(true)
 
     const [pos, setPos] = useState(initPos)
+    useEffect(() => setPos(initPos), [initPos])
 
     const [size, setSize] = useState(initSize)
+    useEffect(() => setSize(initSize), [initSize])
 
     const useStyles = makeStyles((theme) => ({
         rootGrid: {
