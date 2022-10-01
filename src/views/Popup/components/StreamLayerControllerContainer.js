@@ -2,17 +2,15 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
-import styles from '../Popup.module.css'
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import { useCallback } from 'react'
 import { BackgroundSignals } from '../../../common/signals'
 import { selectStreamLayer } from '../../../store/contentSlice';
 
-function StreamLayerControllerContainer({ onSelectInnerLayer, onSelectOuterLayer }) {
+function StreamLayerControllerContainer(props) {
     const useStyles = makeStyles((theme) => ({
         descriptionField: {
             'font-size': '15px',
@@ -22,6 +20,11 @@ function StreamLayerControllerContainer({ onSelectInnerLayer, onSelectOuterLayer
         radioGrid: {
             'display': 'flex',
             'flex-direction': 'row',
+        },
+        tipTextGrid: {
+            height: '30px',
+            'font-size': '12px',
+            'flex-wrap': 'nowrap'
         },
     }))
     const classes = useStyles()
@@ -47,6 +50,9 @@ function StreamLayerControllerContainer({ onSelectInnerLayer, onSelectOuterLayer
                     <FormControlLabel value="outer" control={<Radio color="primary" />} label={chrome.i18n.getMessage("stream_layer_outer")} />
                 </RadioGroup>
             </FormControl>
+            <div className={classes.tipTextGrid}>
+                {chrome.i18n.getMessage("stream_layer_issues")}
+            </div>
         </Grid>
     )
 }

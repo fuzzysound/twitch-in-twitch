@@ -10,6 +10,11 @@ function CurrentDelayContainer(props) {
             height: '15px',
             'font-size': '12px',
             'flex-wrap': 'nowrap'
+        },
+        tipTextGrid: {
+            height: '15px',
+            'font-size': '12px',
+            'flex-wrap': 'nowrap'
         }
     }))
     const classes = useStyles()
@@ -17,8 +22,13 @@ function CurrentDelayContainer(props) {
     const currentMainBroadcastDelay = useSelector(selectCurrentMainBroadcastDelay)
 
     return (
-        <Grid className={classes.currentDelayContainerGrid} item xs>
+        <Grid container direction='column' spacing={1} item xs>
+            <Grid className={classes.currentDelayContainerGrid} item xs>
                 {chrome.i18n.getMessage("current_delay", currentMainBroadcastDelay.toString())}
+            </Grid>
+            <Grid className={classes.tipTextGrid} item xs>
+                {chrome.i18n.getMessage("delay_tip")}
+            </Grid>
         </Grid>
     )
 }

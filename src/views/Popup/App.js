@@ -18,6 +18,7 @@ import { selectIsDarkMode } from '../../store/contentSlice'
 import { selectShowFavoritesContainer } from '../../store/favoriteSlice'
 import { getLatestVodId } from '../../common/twitch'
 import { getVodUrl } from '../../common/utils'
+import GuideContainer from './components/GuideContainer'
 
 function App() {
   const useStyles = makeStyles((theme) => ({
@@ -86,6 +87,10 @@ function App() {
         <Grid className={classes.popupGrid + " " + (isDarkMode ? classes.darkMode : classes.lightMode)} container direction='column' spacing={2}>
             <Grid className={classes.popupElementGrid} container item xs>
                 <TitleContainer />
+            </Grid>
+            <Divider />
+            <Grid className={classes.popupElementGrid} container item xs>
+                <GuideContainer />
             </Grid>
             <Divider />
             <Grid className={classes.popupElementGrid} container item xs>

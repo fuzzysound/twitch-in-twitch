@@ -17,6 +17,9 @@
     "stream_layer_outer": {
         "message": "Outside main"
     },
+    "stream_layer_issues": {
+        "message": "* Using \"Outside main\" is recommended on Naver, Youtube and AfreecaTV due to some bugs."
+    },
     "streamerId": {
         "message": "Streamer/VOD ID"
     },
@@ -108,7 +111,7 @@
         "message": "Dark Mode"
     },
     "vod_feature": {
-        "message": "VOD Only Features"
+        "message": "Twitch VOD Only Features"
     },
     "vod_move_time_together": {
         "message": "Move Time Together"
@@ -124,5 +127,14 @@
     },
     "still_loading": {
         "message": "It might be still loading. \nIf not showing, please refresh the page."
+    },
+    "guide1": {
+        "message": "• Scroll down to find out more features!"
+    },
+    "guide2": {
+        "message": "• If not working, try refreshing!"
+    },
+    "delay_tip": {
+        "message": "Tip: negative or decimal values are available too."
     }
 }
