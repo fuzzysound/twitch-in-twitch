@@ -1,21 +1,23 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Twitch-in-Twitch",
   "version": "1.2.1",
   "description": "__MSG_description__",
   "permissions": [
-    "https://www.twitch.tv/",
-    "https://www.youtube.com/",
-    "https://game.naver.com/",
-    "https://*.afreecatv.com/",
     "declarativeContent",
     "tabs",
     "storage",
     "webNavigation",
     "debugger"
   ],
+  "host_permissions": [
+    "https://www.twitch.tv/",
+    "https://www.youtube.com/",
+    "https://game.naver.com/",
+    "https://*.afreecatv.com/"
+  ],
   "background": {
-    "scripts": ["static/js/background.js"]
+    "service_worker": "static/js/background.js"
   },
   "content_scripts": [
     {
@@ -35,7 +37,7 @@
     "48": "logo/logo48.png",
     "128": "logo/logo128.png"
   },
-  "page_action": {
+  "action": {
     "default_icon": {
       "16": "logo/logo16.png",
       "32": "logo/logo32.png",
@@ -49,7 +51,10 @@
     "page": "options.html"
   },
   "web_accessible_resources": [
-    "static/media/*"
+    {
+      "resources": ["static/media/*"],
+      "matches": ["https://www.twitch.tv/*", "https://www.youtube.com/*", "https://game.naver.com/*", "https://*.afreecatv.com/*"]
+    }
   ],
   "default_locale": "en"
 }
