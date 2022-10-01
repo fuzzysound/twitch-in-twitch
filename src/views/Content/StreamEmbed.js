@@ -1,7 +1,8 @@
+import { TWITCH } from '../../common/allowedHosts'
 import { STREAM_ID_PREFIX } from '../../common/constants'
 function StreamEmbed({
     id = "",
-    parent = "twitch.tv",
+    parent = TWITCH,
     allowFullScreen = true,
     height = '100%',
     width = '100%',
@@ -13,6 +14,7 @@ function StreamEmbed({
     return (
         <iframe
         id={STREAM_ID_PREFIX + id}
+        style={{ 'border': '0' }}
         title={id}
         src={"https://player.twitch.tv/?" + target + "=" + id + "&parent=" + parent + "&muted=" + muted}
         height={height}

@@ -8,7 +8,7 @@ import StreamList from './views/Content/StreamList'
 import ChatFrameWrapper from './views/Content/ChatFrameWrapper'
 import { ForegroundSignals } from './common/signals'
 import { STREAM_ID_PREFIX } from './common/constants'
-import { createDivWithId, findContentRoot, registerObserver, toggleTimePanelVisibility } from './contentUtils'
+import { createEmbedRootWithId, findContentRoot, registerObserver, toggleTimePanelVisibility } from './contentUtils'
 
 const STREAM_INNER_EMBED_ROOT = "stream-embed-root";
 const STREAM_OUTER_EMBED_ROOT = "stream-outer-embed-root";
@@ -24,20 +24,19 @@ const VOD_PATTERN = new RegExp("videos/\\d+$");
     }
 
     const render = () => {
-        const videos = document.getElementsByTagName("video")
-        if (videos.length === 0) {
+        const video = document.querySelector("video")
+        if (!video) {
             return
         }
-        const videoRoot = videos[0].parentElement
+        const videoRoot = video.parentElement
         let streamInnerEmbedRoot = document.getElementById(STREAM_INNER_EMBED_ROOT)
         if (streamInnerEmbedRoot === null) {
-            streamInnerEmbedRoot = createDivWithId(STREAM_INNER_EMBED_ROOT)
+            streamInnerEmbedRoot = createEmbedRootWithId(STREAM_INNER_EMBED_ROOT)
             videoRoot.appendChild(streamInnerEmbedRoot)
         }
         let streamOuterEmbedRoot = document.getElementById(STREAM_OUTER_EMBED_ROOT)
         if (streamOuterEmbedRoot === null) {
-            streamOuterEmbedRoot = createDivWithId(STREAM_OUTER_EMBED_ROOT)
-            streamOuterEmbedRoot.setAttribute("style", "z-index: 99999")
+            streamOuterEmbedRoot = createEmbedRootWithId(STREAM_OUTER_EMBED_ROOT)
             const contentRoot = findContentRoot(document.body, videoRoot)
             if (contentRoot !== null) {
                 contentRoot.appendChild(streamOuterEmbedRoot)
@@ -55,8 +54,7 @@ const VOD_PATTERN = new RegExp("videos/\\d+$");
         )
         let chatEmbedRoot = document.getElementById(CHAT_EMBED_ROOT)
         if (chatEmbedRoot === null) {
-            chatEmbedRoot = createDivWithId(CHAT_EMBED_ROOT)
-            chatEmbedRoot.setAttribute("style", "z-index: 99998")
+            chatEmbedRoot = createEmbedRootWithId(CHAT_EMBED_ROOT)
             const contentRoot = findContentRoot(document.body, videoRoot)
             if (contentRoot !== null) {
                 contentRoot.appendChild(chatEmbedRoot)

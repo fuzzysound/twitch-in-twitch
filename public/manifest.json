@@ -5,6 +5,9 @@
   "description": "__MSG_description__",
   "permissions": [
     "https://www.twitch.tv/",
+    "https://www.youtube.com/",
+    "https://game.naver.com/",
+    "https://*.afreecatv.com/",
     "declarativeContent",
     "tabs",
     "storage",
@@ -18,7 +21,7 @@
     {
       "js": [ "static/js/content.js" ],
       "css": ["static/css/content.css"],
-      "matches": ["https://www.twitch.tv/*"]
+      "matches": ["https://www.twitch.tv/*", "https://www.youtube.com/*", "https://game.naver.com/*", "https://*.afreecatv.com/*"]
     },
     {
       "js": [ "static/js/iframeContent.js" ],

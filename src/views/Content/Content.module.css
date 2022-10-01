@@ -1,8 +1,16 @@
-.rnd {
+.rnd-stream .rnd-chat {
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0);
+}
+
+.rnd-stream {
+    z-index: 99999;
+}
+
+.rnd-chat {
+    z-index: 99998;
 }
 
 .Button {
