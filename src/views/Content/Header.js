@@ -22,7 +22,7 @@ function Header ({ id, title, onClickHbarButton, onClickRefreshButton, onClickXB
         },
         titleGrid: {
             'text-align': 'left',
-            'cursor': 'move'
+            'cursor': 'move',
         },
         buttonGrid: {
             'flex-grow': 0,
@@ -45,7 +45,7 @@ function Header ({ id, title, onClickHbarButton, onClickRefreshButton, onClickXB
     return (
         <Grid className={classes.headerGrid + " " + (isDarkMode ? classes.darkMode : classes.lightMode)} container spacing={0} item xs>
             <Grid item xs className={classes.titleGrid}>
-                <header className='handle'>{title}</header>
+                <header className='handle' style={{ 'font-size': '13px', 'line-height': '1.5' }}>{title}</header>
             </Grid>
             <Grid className={classes.buttonGrid} item xs>
                 <button className={styles.Button} onClick={onClickHbarButton}>

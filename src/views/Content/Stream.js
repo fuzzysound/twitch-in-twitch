@@ -63,7 +63,7 @@ function Stream ({ key, streamerId, host, initPos, initSize }) {
 
     return (
         <Rnd
-        className={styles.rnd}
+        className={styles['rnd-stream']}
         size={{ width: size.width, height: size.height }}
         position={{ x: pos.x, y: pos.y }}
         lockAspectRatio={true}

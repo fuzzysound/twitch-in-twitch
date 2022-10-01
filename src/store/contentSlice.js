@@ -1,6 +1,7 @@
 import {
     createSlice
 } from '@reduxjs/toolkit'
+import { getHostFromUrl } from '../common/allowedHosts'
 import {
     getRandomInt
 } from '../common/utils'
@@ -199,15 +200,11 @@ const contentSlice = createSlice({
         },
         removeChatFrame(state, action) {
             delete state.addedChatsByTabId[action.payload]
-            delete state.chatFrameLastPosition[action.payload]
-            delete state.chatFrameLastSize[action.payload]
             delete state.currentChatIdxByTabId[action.payload]
         },
         removeTabRelatedState(state, action) {
             delete state.addedStreamsByTabId[action.payload]
             delete state.addedChatsByTabId[action.payload]
-            delete state.chatFrameLastPosition[action.payload]
-            delete state.chatFrameLastSize[action.payload]
             delete state.currentChatIdxByTabId[action.payload]
             delete state.activeUrlsByTabId[action.payload]
             delete state.mainBroadcastDelayByTabId[action.payload]
@@ -235,7 +232,7 @@ const contentSlice = createSlice({
         },
         updateChatFrameLastPosition(state, action) {
             state.chatFrameLastPosition = action.payload
-        },
+            },
         updateChatFrameLastSize(state, action) {
             state.chatFrameLastSize = action.payload
         },
@@ -259,37 +256,37 @@ const contentSlice = createSlice({
         },
         updateStreamInitPosition(state, action) {
             const newPos = action.payload
-            if (newPos.x) {
+                if (newPos.x) {
                 state.streamInitPosition.x = newPos.x
-            }
-            if (newPos.y) {
+                }
+                if (newPos.y) {
                 state.streamInitPosition.y = newPos.y
-            }
-        },
+                }
+            },
         updateStreamInitSize(state, action) {
             const newSize = action.payload
-            if (newSize.width) {
+                if (newSize.width) {
                 state.streamInitSize.width = newSize.width
-            }
-            if (newSize.height) {
+                }
+                if (newSize.height) {
                 state.streamInitSize.height = newSize.height
-            }
-        },
+                }
+            },
         updateChatFrameInitPosition(state, action) {
             const newPos = action.payload
-            if (newPos.x) {
+                if (newPos.x) {
                 state.chatFrameInitPosition.x = newPos.x
-            }
-            if (newPos.y) {
+                }
+                if (newPos.y) {
                 state.chatFrameInitPosition.y = newPos.y
-            }
-        },
+                }
+            },
         updateChatFrameInitSize(state, action) {
             const newSize = action.payload
-            if (newSize.width) {
+                if (newSize.width) {
                 state.chatFrameInitSize.width = newSize.width
-            }
-            if (newSize.height) {
+                }
+                if (newSize.height) {
                 state.chatFrameInitSize.height = newSize.height
             }
         },
@@ -404,11 +401,8 @@ const selectCurrentHost = state => {
     const activeUrlsByTabId = state.content.activeUrlsByTabId
     if (currentTabId in activeUrlsByTabId) {
         const currentUrl = activeUrlsByTabId[currentTabId]
-        if (currentUrl.match("twitch.tv")) {
-            return "twitch.tv"
-        } else {
-            return ""
-        }
+        const host = getHostFromUrl(currentUrl) || ""
+        return host
     } else {
         return ""
     }

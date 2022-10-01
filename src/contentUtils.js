@@ -10,9 +10,10 @@ export const findContentRoot = (body, videoRoot) => {
     return null
 }
 
-export const createDivWithId = id => {
+export const createEmbedRootWithId = id => {
     const div = document.createElement("div")
     div.setAttribute("id", id)
+    div.setAttribute("style", "position: absolute; top: 0px; left: 0px;")
     return div
 }
 

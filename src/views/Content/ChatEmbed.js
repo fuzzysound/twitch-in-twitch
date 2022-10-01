@@ -1,8 +1,9 @@
+import { TWITCH } from '../../common/allowedHosts'
 import { CHAT_ID_PREFIX } from '../../common/constants'
 
 function ChatEmbed({
     channel = "",
-    parent = "twitch.tv",
+    parent = TWITCH,
     isDarkMode = false,
     height = '100%',
     width = '100%',

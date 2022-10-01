@@ -10,6 +10,7 @@ resetContentState, changeStreamLayer, toggleVodMoveTimeTogether, toggleVodSpoile
 import { addToFavorites, removeFromFavorites, resetFavoriteState } from './store/favoriteSlice'
 import { BackgroundSignals } from './common/signals'
 import { STREAM_ID_PREFIX, CHAT_ID_PREFIX } from './common/constants'
+import { ALLOWED_HOSTS } from './common/allowedHosts'
 
 const OVERLAY_COLOR = { r: 155, g: 11, b: 239, a: 0.7 }
 const wait = (timeToDelay) => new Promise((resolve) => setTimeout(resolve, timeToDelay))
@@ -19,11 +20,11 @@ chrome.runtime.onInstalled.addListener(function () {
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
         chrome.declarativeContent.onPageChanged.addRules([
         {
-            conditions: [
-            new chrome.declarativeContent.PageStateMatcher({
-                pageUrl: { urlMatches: 'twitch.tv/.*' },
-            })
-            ],
+            conditions: ALLOWED_HOSTS.map(host => {
+                return new chrome.declarativeContent.PageStateMatcher({
+                    pageUrl: { urlMatches: `${host}/.*` },
+                })
+            }),
             actions: [new chrome.declarativeContent.ShowPageAction()]
         }
         ])
