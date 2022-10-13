@@ -32,15 +32,10 @@ export const registerObserver = async (selector, callback) => {
 }
 
 export const toggleTimePanelVisibility = store => () => {
-    const video = document.querySelector("video")
-    if (!video) {
-        return
-    }
-    const videoRoot = video.parentElement
-    const timePanel = videoRoot.querySelector(TIME_PANEL_SELECTOR)
+    const timePanels = document.querySelectorAll(TIME_PANEL_SELECTOR)
     if (store.state.content.isVodSpoilerFree) {
-        timePanel.style.visibility = "hidden"
+        timePanels.forEach(timePanel => timePanel.style.visibility = "hidden")
     } else {
-        timePanel.style.visibility = "visible"
+        timePanels.forEach(timePanel => timePanel.style.visibility = "visible")
     }
 }
