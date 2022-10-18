@@ -28,11 +28,22 @@ function ContentFinderContainer(props) {
         chrome.runtime.sendMessage({ signal: BackgroundSignals.SHOW_CONTENT_OVERLAY, addedStreams: addedStreams, addedChats: addedChats })
     }, [currentChatFrameInfo.streamerIds, currentChatIdx, currentStreamsInfo])
 
+    const resetPositionAndSize = useCallback(() => {
+        chrome.runtime.sendMessage({ signal: BackgroundSignals.RESET_POSITION_AND_SIZE })
+    }, [])
+
     return (
         <Grid className={classes.contentFinderContainerGrid} container spacing={1} item xs>
-            <Button variant='contained' onClick={findContent}>
-                {chrome.i18n.getMessage("find_content")}
-            </Button>
+            <Grid item xs={6}>
+                <Button variant='contained' onClick={findContent}>
+                    {chrome.i18n.getMessage("find_content")}
+                </Button>
+            </Grid>
+            <Grid item xs={6}>
+                <Button variant='contained' onClick={resetPositionAndSize}>
+                    {chrome.i18n.getMessage("reset_pos_and_size")}
+                </Button>
+            </Grid>
         </Grid>
     )
 }

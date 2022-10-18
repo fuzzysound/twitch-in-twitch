@@ -324,6 +324,16 @@ const contentSlice = createSlice({
         changeTimeMoveUnit(state, action) {
             state.timeMoveUnit = Number(action.payload)
         },
+        resetPositionAndSize(state, action) {
+            for (let streamerId of Object.keys(state.streamLastPositions)) {
+                state.streamLastPositions[streamerId] = state.streamInitPosition
+            }
+            for (let streamerId of Object.keys(state.streamLastSizes)) {
+                state.streamLastSizes[streamerId] = state.streamInitSize
+            }
+            state.chatFrameLastPosition = state.chatFrameInitPosition
+            state.chatFrameLastSize = state.chatFrameInitSize
+        },
         render(state, action) {
             // render function in content script is called by store subscriber
             // thus only state change can make rendering occur.
@@ -470,6 +480,7 @@ export const {
     resetContentState,
     changeStreamLayer,
     changeTimeMoveUnit,
+    resetPositionAndSize,
     render,
 } = contentSlice.actions
 
