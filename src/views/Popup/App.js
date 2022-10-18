@@ -59,7 +59,7 @@ function App() {
     if (vodId !== null) {
       const vodUrl = getVodUrl(vodId)
       chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-          chrome.tabs.sendMessage(tabs[0].id, { signal: ForegroundSignals.GOTO, url: vodUrl })
+          chrome.tabs.update(tabs[0].id, { url: vodUrl })
       })
     }
   }, [])

@@ -89,8 +89,6 @@ const VOD_PATTERN = new RegExp("videos/\\d+$");
                 return
             }
             video.currentTime -= request.interval
-        } else if (request.signal === ForegroundSignals.GOTO) {
-            window.location.href = request.url
         }
         return true
     }
