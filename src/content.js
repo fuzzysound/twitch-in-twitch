@@ -8,7 +8,7 @@ import StreamList from './views/Content/StreamList'
 import ChatFrameWrapper from './views/Content/ChatFrameWrapper'
 import { ForegroundSignals } from './common/signals'
 import { STREAM_ID_PREFIX } from './common/constants'
-import { createEmbedRootWithId, findContentRoot, registerObserver, toggleTimePanelVisibility } from './contentUtils'
+import { createEmbedRootWithId, findContentRoot, moveVideoTime, registerObserver, toggleTimePanelVisibility } from './contentUtils'
 
 const STREAM_INNER_EMBED_ROOT = "stream-embed-root";
 const STREAM_OUTER_EMBED_ROOT = "stream-outer-embed-root";
@@ -21,6 +21,20 @@ const VOD_PATTERN = new RegExp("videos/\\d+$");
     function postMessageToAllStreams(message) {
         const streamIframes = document.querySelectorAll('[id^="' + STREAM_ID_PREFIX + '"]')
         streamIframes.forEach(iframe => iframe.contentWindow.postMessage(message, "*"))
+    }
+
+    function moveBackVideoTime() {
+        moveVideoTime(-1 * store.state.content.timeMoveUnit)
+        if (store.state.content.isVodMoveTimeTogether) {
+            postMessageToAllStreams(ForegroundSignals.MOVE_BACK)
+        }
+    }
+
+    function moveForwardVideoTime() {
+        moveVideoTime(store.state.content.timeMoveUnit)
+        if (store.state.content.isVodMoveTimeTogether) {
+            postMessageToAllStreams(ForegroundSignals.MOVE_FORWARD)
+        }
     }
 
     const render = () => {
@@ -81,18 +95,26 @@ const VOD_PATTERN = new RegExp("videos/\\d+$");
         return true
     }
 
+    const messageListener = event => {
+        if (event.data === ForegroundSignals.MOVE_BACK) {
+            moveBackVideoTime()
+        } else if (event.data === ForegroundSignals.MOVE_FORWARD) {
+            moveForwardVideoTime()
+        }
+    }
+
     const keyDownEventListener = store => event => {
-        if (store.state.content.isVodMoveTimeTogether) {
-            switch (event.keyCode) {
-                case 37:
-                    postMessageToAllStreams(ForegroundSignals.MOVE_BACK)
-                    break
-                case 39:
-                    postMessageToAllStreams(ForegroundSignals.MOVE_FORWARD)
-                    break
-                default:
-                    break
-            }
+        switch (event.keyCode) {
+            case 37:
+                event.stopImmediatePropagation()
+                moveBackVideoTime()
+                break
+            case 39:
+                event.stopImmediatePropagation()
+                moveForwardVideoTime()
+                break
+            default:
+                break
         }
     }
 
@@ -101,6 +123,7 @@ const VOD_PATTERN = new RegExp("videos/\\d+$");
     if (document.documentURI.match(VOD_PATTERN)) {
         registerObserver('main', toggleTimePanelVisibility(store))
         store.subscribe(toggleTimePanelVisibility(store))
-        document.onkeydown = keyDownEventListener(store)
+        window.addEventListener("message", messageListener)
+        window.addEventListener("keydown", keyDownEventListener(store), true)
     }
 })()

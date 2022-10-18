@@ -119,6 +119,9 @@
     "vod_spoiler_free": {
         "message": "스포일러 방지"
     },
+    "vod_time_move_unit": {
+        "message": "시간 탐색 단위"
+    },
     "please_refresh": {
         "message": "페이지를 새로고침해 주세요."
     },

@@ -119,6 +119,9 @@
     "vod_spoiler_free": {
         "message": "Spoiler Free"
     },
+    "vod_time_move_unit": {
+        "message": "Move Time Unit"
+    },
     "please_refresh": {
         "message": "Please refresh the page."
     },
