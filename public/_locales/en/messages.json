@@ -96,7 +96,10 @@
         "message": "Reset All Data"
     },
     "find_content": {
-        "message": "I can't see streams or chat!"
+        "message": "Flicker"
+    },
+    "reset_pos_and_size": {
+        "message": "Reset pos/size"
     },
     "current_delay": {
         "message": "Current Delay: $delaySec$sec",
