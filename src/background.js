@@ -109,123 +109,108 @@ async function showContentOverlay(tabId, addedStreams, addedChats) {
     const store = await storeCreatorFactory({ createStore })(rootReducer)
 
     // remove tab related state when removed
-    chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
-        store.dispatch(removeTabRelatedState(tabId))
+    chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
+        await store.dispatch(removeTabRelatedState(tabId))
     })
 
     // remove tab related state when updated
-    chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         const activeUrlsByTabId = store.getState().content.activeUrlsByTabId
         if (changeInfo.url && tabId in activeUrlsByTabId && activeUrlsByTabId[tabId] !== changeInfo.url) {
-            store.dispatch(removeTabRelatedState(tabId))    
+            await store.dispatch(removeTabRelatedState(tabId))    
         }
     })
 
     // change current tab state when changed
-    chrome.tabs.onActivated.addListener(activeInfo => {
-        store.dispatch(changeCurrentTab(activeInfo.tabId))
+    chrome.tabs.onActivated.addListener(async (activeInfo) => {
+        await store.dispatch(changeCurrentTab(activeInfo.tabId))
     })
 
     // re-render widgets when mainframe change is just refresh, otherwise 
     // remove remove tab related state and renew active url
-    chrome.webNavigation.onCompleted.addListener(({ parentFrameId, tabId, url }) => {
+    chrome.webNavigation.onCompleted.addListener(async ({ parentFrameId, tabId, url }) => {
         if (parentFrameId === -1) {
             const activeUrlsByTabId = store.getState().content.activeUrlsByTabId
             if (tabId in activeUrlsByTabId) {
                 if (activeUrlsByTabId[tabId] === url) {
                     // refresh doesn't change the state, thus not caught by store subscription
                     // therefore we have to manually re-render the content
-                    store.dispatch(render())
+                    await store.dispatch(render())
                     // reset main broadcast delay
-                    store.dispatch(updateMainBroadcastDelay(tabId, 0))
+                    await store.dispatch(updateMainBroadcastDelay(tabId, 0))
                 } else {
-                    store.dispatch(removeTabRelatedState(tabId))
+                    await store.dispatch(removeTabRelatedState(tabId))
                 }
             } else {
-                store.dispatch(removeTabRelatedState(tabId))
+                await store.dispatch(removeTabRelatedState(tabId))
             }
         }
     })
 
     // clear tab related state when window closed
-    chrome.windows.onRemoved.addListener(windowId => {
-        chrome.tabs.query({ windowId: windowId }, tabs => {
-            for (let tab of tabs) {
-                store.dispatch(removeTabRelatedState(tab.id))
-            }
-        })
+    chrome.windows.onRemoved.addListener(async (windowId) => {
+        const tabs = await chrome.tabs.query({ windowId: windowId })
+        for (let tab of tabs) {
+            await store.dispatch(removeTabRelatedState(tab.id))
+        }
     })
 
     // on runtime message
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+        const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
         if (request.signal === BackgroundSignals.ADD_STREAM) {
-            chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                store.dispatch(addStream(tabs[0].id, request.streamerId, tabs[0].url))
-            })
+            await store.dispatch(addStream(tabs[0].id, request.streamerId, tabs[0].url))
         } else if (request.signal === BackgroundSignals.REMOVE_STREAM) {
-            chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                store.dispatch(removeStream(tabs[0].id, request.streamerId))
-            })
+            await store.dispatch(removeStream(tabs[0].id, request.streamerId))
         } else if (request.signal === BackgroundSignals.ADD_CHAT) {
-            chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                store.dispatch(addChat(tabs[0].id, request.streamerId, tabs[0].url))
-            })
+            await store.dispatch(addChat(tabs[0].id, request.streamerId, tabs[0].url))
         } else if (request.signal === BackgroundSignals.REMOVE_CHAT) {
-            chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                store.dispatch(removeChat(tabs[0].id, request.streamerId))
-            })
+            await store.dispatch(removeChat(tabs[0].id, request.streamerId))
         } else if (request.signal === BackgroundSignals.SELECT_CHAT) {
-            chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                store.dispatch(selectChat(tabs[0].id, request.idx))
-            })
+            await store.dispatch(selectChat(tabs[0].id, request.idx))
         } else if (request.signal === BackgroundSignals.REMOVE_CHAT_FRAME) {
-            chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                store.dispatch(removeChatFrame(tabs[0].id))
-            })
+            await store.dispatch(removeChatFrame(tabs[0].id))
         } else if (request.signal === BackgroundSignals.ADD_TO_FAVORITES) {
-            store.dispatch(addToFavorites(request.streamerId))
+            await store.dispatch(addToFavorites(request.streamerId))
         } else if (request.signal === BackgroundSignals.REMOVE_FROM_FAVORITES) {
-            store.dispatch(removeFromFavorites(request.streamerId))
+            await store.dispatch(removeFromFavorites(request.streamerId))
         } else if (request.signal === BackgroundSignals.UPDATE_STREAM_LAST_POS) {
-            store.dispatch(updateStreamLastPosition(request.streamerId, request.pos))
+            await store.dispatch(updateStreamLastPosition(request.streamerId, request.pos))
         } else if (request.signal === BackgroundSignals.UPDATE_STREAM_LAST_SIZE) {
-            store.dispatch(updateStreamLastSize(request.streamerId, request.size))
+            await store.dispatch(updateStreamLastSize(request.streamerId, request.size))
         } else if (request.signal === BackgroundSignals.UPDATE_CHAT_FRAME_LAST_POS) {
-            store.dispatch(updateChatFrameLastPosition(request.pos))
+            await store.dispatch(updateChatFrameLastPosition(request.pos))
         } else if (request.signal === BackgroundSignals.UPDATE_CHAT_FRAME_LAST_SIZE) {
-            store.dispatch(updateChatFrameLastSize(request.size))
+            await store.dispatch(updateChatFrameLastSize(request.size))
         } else if (request.signal === BackgroundSignals.UPDATE_DELAY) {
-            store.dispatch(updateMainBroadcastDelay(request.tabId, request.delaySec))
+            await store.dispatch(updateMainBroadcastDelay(request.tabId, request.delaySec))
         } else if (request.signal === BackgroundSignals.TOGGLE_DARK_MODE) {
-            store.dispatch(toggleDarkMode())
+            await store.dispatch(toggleDarkMode())
         } else if (request.signal === BackgroundSignals.TOGGLE_VOD_MOVE_TIME_TOGETHER) {
-            store.dispatch(toggleVodMoveTimeTogether())
+            await store.dispatch(toggleVodMoveTimeTogether())
         } else if (request.signal === BackgroundSignals.TOGGLE_VOD_SPOILER_FREE) {
-            store.dispatch(toggleVodSpoilerFree())
+            await store.dispatch(toggleVodSpoilerFree())
         } else if (request.signal === BackgroundSignals.SHOW_CONTENT_OVERLAY) {
-            chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                const tabId = tabs.length === 0 ? null : tabs[0].id
-                showContentOverlay(tabId, request.addedStreams, request.addedChats)
-            })
+            showContentOverlay(tabs[0]?.id, request.addedStreams, request.addedChats)
         } else if (request.signal === BackgroundSignals.UPDATE_STREAM_INIT_POS) {
-            store.dispatch(updateStreamInitPosition(request.newPos))
+            await store.dispatch(updateStreamInitPosition(request.newPos))
         } else if (request.signal === BackgroundSignals.UPDATE_STREAM_INIT_SIZE) {
-            store.dispatch(updateStreamInitSize(request.newSize))
+            await store.dispatch(updateStreamInitSize(request.newSize))
         } else if (request.signal === BackgroundSignals.UPDATE_CHAT_FRAME_INIT_POS) {
-            store.dispatch(updateChatFrameInitPosition(request.newPos))
+            await store.dispatch(updateChatFrameInitPosition(request.newPos))
         } else if (request.signal === BackgroundSignals.UPDATE_CHAT_FRAME_INIT_SIZE) {
-            store.dispatch(updateChatFrameInitSize(request.newSize))
+            await store.dispatch(updateChatFrameInitSize(request.newSize))
         } else if (request.signal === BackgroundSignals.RESET_CONTENT_STATE) {
-            store.dispatch(resetContentState())
+            await store.dispatch(resetContentState())
         } else if (request.signal === BackgroundSignals.RESET_FAVORITE_STATE) {
-            store.dispatch(resetFavoriteState())
+            await store.dispatch(resetFavoriteState())
         } else if (request.signal === BackgroundSignals.CHANGE_STREAM_LAYER_TO_INNER) {
-            store.dispatch(changeStreamLayer("inner"))
+            await store.dispatch(changeStreamLayer("inner"))
         } else if (request.signal === BackgroundSignals.CHANGE_STREAM_LAYER_TO_OUTER) {
-            store.dispatch(changeStreamLayer("outer"))
+            await store.dispatch(changeStreamLayer("outer"))
         } else if (request.signal === BackgroundSignals.CHANGE_TIME_MOVE_UNIT) {
-            store.dispatch(changeTimeMoveUnit(request.timeMoveUnit))
+            await store.dispatch(changeTimeMoveUnit(request.timeMoveUnit))
         }
-        store.dispatch(render())
+        await store.dispatch(render())
     })
 })()

@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
 import { makeStyles, createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from "@material-ui/styles";
-import { BackgroundSignals, ForegroundSignals } from '../../common/signals'
+import { BackgroundSignals } from '../../common/signals'
 import TitleContainer from './components/TitleContainer'
 import DarkModeControllerContainer from './components/DarkModeControllerContainer'
 import VodFeatureControllerContainer from './components/VodFeatureControllerContainer'
