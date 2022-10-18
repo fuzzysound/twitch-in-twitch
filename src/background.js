@@ -6,7 +6,7 @@ removeChatFrame, removeTabRelatedState, changeCurrentTab, updateStreamLastPositi
 updateStreamLastSize, updateChatFrameLastPosition, updateChatFrameLastSize,
 updateMainBroadcastDelay, toggleDarkMode, updateStreamInitPosition,
 updateStreamInitSize, updateChatFrameInitPosition, updateChatFrameInitSize,
-resetContentState, changeStreamLayer, toggleVodMoveTimeTogether, toggleVodSpoilerFree, render } from './store/contentSlice'
+resetContentState, changeStreamLayer, toggleVodMoveTimeTogether, toggleVodSpoilerFree, render, changeTimeMoveUnit } from './store/contentSlice'
 import { addToFavorites, removeFromFavorites, resetFavoriteState } from './store/favoriteSlice'
 import { BackgroundSignals } from './common/signals'
 import { STREAM_ID_PREFIX, CHAT_ID_PREFIX } from './common/constants'
@@ -223,6 +223,8 @@ async function showContentOverlay(tabId, addedStreams, addedChats) {
             store.dispatch(changeStreamLayer("inner"))
         } else if (request.signal === BackgroundSignals.CHANGE_STREAM_LAYER_TO_OUTER) {
             store.dispatch(changeStreamLayer("outer"))
+        } else if (request.signal === BackgroundSignals.CHANGE_TIME_MOVE_UNIT) {
+            store.dispatch(changeTimeMoveUnit(request.timeMoveUnit))
         }
         store.dispatch(render())
     })

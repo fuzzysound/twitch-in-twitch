@@ -29,7 +29,7 @@ const initialState = {
     isStreamOnOuterLayer: false,
     isVodMoveTimeTogether: false,
     isVodSpoilerFree: false,
-
+    timeMoveUnit: 10,
 }
 
 const contentSlice = createSlice({
@@ -311,6 +311,7 @@ const contentSlice = createSlice({
             state.isStreamOnOuterLayer = initialState.isStreamOnOuterLayer
             state.isVodMoveTimeTogether = initialState.isVodMoveTimeTogether
             state.isVodSpoilerFree = initialState.isVodSpoilerFree
+            state.timeMoveUnit = initialState.timeMoveUnit
         },
         changeStreamLayer(state, action) {
             const layer = action.payload
@@ -319,6 +320,9 @@ const contentSlice = createSlice({
             } else {
                 state.isStreamOnOuterLayer = true
             }
+        },
+        changeTimeMoveUnit(state, action) {
+            state.timeMoveUnit = Number(action.payload)
         },
         render(state, action) {
             // render function in content script is called by store subscriber
@@ -440,6 +444,8 @@ const selectStreamLayer = state => {
     }
 }
 
+const selectTimeMoveUnit = state => state.content.timeMoveUnit
+
 export const {
     addStream,
     addChat,
@@ -463,6 +469,7 @@ export const {
     updateChatFrameInitSize,
     resetContentState,
     changeStreamLayer,
+    changeTimeMoveUnit,
     render,
 } = contentSlice.actions
 
@@ -482,6 +489,7 @@ export {
     selectChatFrameInitPosition,
     selectChatFrameInitSize,
     selectStreamLayer,
+    selectTimeMoveUnit,
 }
 
 export default contentSlice.reducer

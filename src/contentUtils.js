@@ -39,3 +39,8 @@ export const toggleTimePanelVisibility = store => () => {
         timePanels.forEach(timePanel => timePanel.style.visibility = "visible")
     }
 }
+
+export const moveVideoTime = sec => {
+    const video = document.querySelector('video')
+    if (video) video.currentTime += sec
+}

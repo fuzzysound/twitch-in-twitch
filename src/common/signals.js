@@ -32,6 +32,7 @@ const BackgroundSignals = {
     RESET_FAVORITE_STATE: "reset_favorite_state",
     CHANGE_STREAM_LAYER_TO_INNER: "change_stream_layer_to_inner",
     CHANGE_STREAM_LAYER_TO_OUTER: "change_stream_layer_to_outer",
+    CHANGE_TIME_MOVE_UNIT: "change_time_move_unit",
 }
 
 export {
