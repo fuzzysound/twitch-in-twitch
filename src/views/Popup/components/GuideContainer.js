@@ -19,6 +19,9 @@ function GuideContainer(props) {
             <Grid item xs>
                 {chrome.i18n.getMessage("guide2")}
             </Grid>
+            <Grid item xs>
+                {chrome.i18n.getMessage("guide3")}
+            </Grid>
         </Grid>
     )
 }

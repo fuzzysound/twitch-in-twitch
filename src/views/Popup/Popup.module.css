@@ -3,6 +3,11 @@
     text-align: left;
 }
 
+.version {
+    font-size: 12px;
+    text-align: left;
+}
+
 .favoritesTitle {
     font-size: 15px;
     text-align: left;

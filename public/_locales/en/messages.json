@@ -140,6 +140,9 @@
     "guide2": {
         "message": "• If not working, try refreshing!"
     },
+    "guide3": {
+        "message": "• Supports: Twitch, Youtube, Naver eSports, AfreecaTV"
+    },
     "delay_tip": {
         "message": "Tip: negative or decimal values are available too."
     }
