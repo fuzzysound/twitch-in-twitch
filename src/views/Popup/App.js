@@ -24,6 +24,7 @@ function App() {
   const useStyles = makeStyles((theme) => ({
     popupGrid: {
         padding: '5px',
+        width: '500px',
     },
     popupElementGrid: {
     },

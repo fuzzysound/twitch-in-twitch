@@ -8,6 +8,12 @@
     text-align: left;
 }
 
+.rip {
+    font-size: 10px;
+    font-family: serif;
+    margin-top: 12px;
+}
+
 .favoritesTitle {
     font-size: 15px;
     text-align: left;
